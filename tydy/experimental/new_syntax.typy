@@ -1,0 +1,89 @@
+"""What might a typy-specialized extension of Python's syntax look like? 
+
+Proposal on the left, desugaring on the right.
+I don't think you need a lot. Mainly, I want to be able to (in order of preference):
+
+ - Put decorators on same line as def, or in lieu of def
+ - Omit def argument parens
+ - e :: t form instead of e [: t]
+ - use | pat: e instead of with pat: e
+ - use let x: for block term assignment, rather than with let[x]:
+ """
+
+												@interface
+    interface INat:								def INat():
+ 		type nat									t [type]
+		zero :: nat									zero [: t]
+        succ :: nat > nat							succ [: t > t]
+        case :: (									case [: (
+            t 									    <t_%9>	t
+            * rules(t, +a)								* rules(t, +a)
+            > t) 
+        eq :: (t, t) > boolean						eq [: (t, t) > boolean]
+        of_num :: num > opt(t)						of_num [: num > opt(t)]
+        to_num :: t > num							to_num [: t > opt(t)]
+
+												@INat
+    component NumNat :: INat:					def NumNat():
+        t == num								    t == num
+        zero = 0									zero = 0
+        succ = _ + 1								succ = _ + 1
+        
+        def case(n, rules):							def case(n, rules):
+            if n == 0: rules.zero						if n == 0: rules.zero
+            else: rules.succ(n - 1)						else: rules.succ(n - 1)
+        
+        def eq(n1, n2):								def eq(n1, n2):
+            n1 == n2									n1 == n2
+
+        def of_num(n):								def of_num(n):
+            if n < 0: N									if n < 0: N
+            else: Y(n)									else: Y(n)
+
+        def to_num(n): n							def to_num(n): n
+
+												@INat
+    component UnaryNat :: INat:					def UnaryNat():
+        type t = [Z + S(t)]							type t = [Z + S(t)]
+        zero = Z									zero = Z
+        succ = S(_)									succ = S(_)
+
+        def case(n, rules):							def case(n, rules):
+            match n										match[n]
+            | Z: rules.zero								with Z: rules.zero
+            | S(p): rules.succ(p)						with S(p): rules.succ(p)
+
+        def eq(*n):									def eq(*n):
+            match n										match n
+            | Z, Z: True								with Z, Z: True
+            | Z, _: False								with Z, _: False
+            | S(p1), S(p2): eq(p1, p2)					with S(p1), S(p2): eq(p1, p2)
+            | _, _: False								_, _: False
+
+			(x, y) =								with let[x, y]:
+				x = 5									x = 5
+				y = 3									y = 3
+				x + x + x								x + x + x
+			Y(x) [+match] = NumNat.of_num(3)		Y(x) [+match] = NumNat.of_num(3)
+
+        def of_num(n):								def of_num(n):
+            if n < 0: N									if n < 0: N
+            else: Y(S(of_num(n - 1)))					else: Y(S(of_num(n-1)))
+
+        def to_num(n):								def to_num(n):
+            match n										match[n]
+            with Z: 0									with Z: 0
+            with S(p): to_num(p) + 1					with S(p): to_num(p) + 1
+
+													@component
+	component TestINat(N :: INat):					def TestINat(N):
+														INat > _
+		let three:										with let[three]:
+			one = N.zero.succ								one = N.zero.succ
+			one.succ.succ									one.succ.succ
+		assert +match three with {Y(_): True}			assert +match[three] is {Y(_): True}
+
+anat(+nat) == Z + S(+nat)
+nat == anat(nat) # OK!
+unat == anat(UnaryNat.t)
+
