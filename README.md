@@ -1,3 +1,5 @@
+NOTE: Tydy is still under development and not intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
+
 Tydy 
 ====
 Tydy (pronounced "tidy") is a statically typed, functional-first programming language in the ML tradition. ``tydy`` (pronounced "tie dye") is an implementation of Tydy as a Python library.
