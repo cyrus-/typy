@@ -36,7 +36,7 @@ I think `tydy` could bring statically typed functional programming to the masses
 * contribute to my patreon campaign, individually or as an organizational sponsor
 * hire me to give a training seminar, provide support or consult
 * teach a course using tydy (teaching material)
-* give a talk to your local Python users group, your academic department, or to a regional Python conference about tydy (example slides)
+* give a talk to your local Python users group, your academic department, or to a conference about tydy (example slides)
 * join the tydy team -- there are lots of really interesting projects for anyone interested in programming language design and implementation.
 
 License
