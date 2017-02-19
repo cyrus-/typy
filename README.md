@@ -1,4 +1,4 @@
-NOTE: Tydy is still under development and not intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
+NOTE: Tydy is still under development and this repository is not yet intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
 
 tydy (pronounced "tidy") 
 ========================
@@ -15,11 +15,9 @@ def Hello():
 	print(greet(x))
 ```
 
-Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by tydy.
+Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by tydy. For example, notice that the function `greet` does not use the `return` keyword. Like other functional programming languages, everything is an expression.
 
-Notice that the function `greet` does not use the `return` keyword. Like other functional programming languages, everything is an expression.
-
-tydy also notably features:
+tydy notably features:
 * local type inference
 * tuples and labeled tuples
 * labeled sum types (variants)
@@ -31,10 +29,9 @@ If you're intrigued, check out the documentation for more details. If you need c
 
 I need *your* contributions and support:
 * star, follow, join, share
-* contribute to my patreon campaign
-* convince your employer to sponsor tydy
-* hire me to give a training seminar, provide support or consult on a tydy project
-* write a library for tydy
+* write a tydy library (ideas)
+* contribute to my patreon campaign, individually or as an organizational sponsor
+* hire me to give a training seminar, provide support or consult
 * join the tydy team, there are lots of really interesting projects for anyone interested in programming language design and implementation.
 
 Contributors
