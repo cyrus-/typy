@@ -1,25 +1,23 @@
 NOTE: Tydy is still under development and not intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
 
-Tydy 
-====
-tydy (pronounced "tidy")
-is a statically typed functional programming language (in the ML tradition)
-embedded into Python as a library.
+tydy (pronounced "tidy") 
+========================
+tydy is a statically typed functional programming language (in the ML tradition) embedded into Python as a library.
 
-```
+```python 
 import tydy
 
 @tydy.component
 def Hello():
-	def greet(x : string): 
+	def greet(x : str): 
 	    "Hello, " + x
 	
 	print(greet(x))
 ```
 
-Definitions decorated with @tydy.component are parsed by Python, but given static and dynamic meaning by tydy.
+Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by tydy.
 
-Notice that the function greet does not use the return keyword. Like other functional programming languages, everything is an expression.
+Notice that the function `greet` does not use the `return` keyword. Like other functional programming languages, everything is an expression.
 
 tydy also notably features:
 * local type inference
