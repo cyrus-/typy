@@ -12,7 +12,7 @@ def Hello():
 	def greet(x : str): 
 	    "Hello, " + x
 	
-	print(greet(x))
+	print(greet("World"))
 ```
 
 Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by `tydy`. For example, notice that the function `greet` does not use the `return` keyword -- like other functional programming languages, everything is an expression.
