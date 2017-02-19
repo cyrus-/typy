@@ -31,11 +31,12 @@ If you're intrigued, check out the documentation for more details. If you need c
 Contribute!
 -----------
 I think `tydy` could bring statically typed functional programming to the masses, but for that to happen, I need you to help:
-* star, follow, join our gitter, share
+* star this repository, follow cyrus on Twitter, join our gitter, share
 * write a tydy library (ideas)
 * contribute to my patreon campaign, individually or as an organizational sponsor
 * hire me to give a training seminar, provide support or consult
-* teach a course using tydy
+* teach a course using tydy (teaching material)
+* give a talk to your local Python users group, your academic department, or to a regional Python conference about tydy (example slides)
 * join the tydy team -- there are lots of really interesting projects for anyone interested in programming language design and implementation.
 
 License
