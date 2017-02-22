@@ -1,21 +1,22 @@
 NOTE: Tydy is still under development and this repository is not yet intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
 
 `tydy` (pronounced "tidy") 
-===================================================
+==========================
 `tydy` is a statically typed functional programming language embedded dynamically into Python.
 
+Hello World!
+------------
 ```python 
 import tydy
 
 @tydy.component
 def Hello():
-	def greet(x : str): 
-	    "Hello, " + x
-	
-	print(greet("World"))
+    def greet(x : string): 
+        "Hello, " + x + "!"
+    print(greet("World"))
 ```
 
-Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by `tydy`. For example, notice that the function `greet` does not use the `return` keyword -- like other functional programming languages, everything is an expression.
+Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by `tydy`. For example, notice that the function `greet` above does not use the `return` keyword. As in other functional programming languages, *everything is an expression*.
 
 Features
 --------
