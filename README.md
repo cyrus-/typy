@@ -19,12 +19,10 @@ Definitions decorated with `@tydy.component` are parsed by Python, but given sta
 
 Features
 --------
-* local type inference
-* tuples and labeled tuples
-* labeled sum types (variants)
+* algebraic datatypes (i.e. tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
-* clean interoperability with Python (you can even pattern match on Python values!)
+* clean two-way interoperability with Python
 
 If you're intrigued, check out the documentation for more details. If you need convincing, you might be interested in why you should tydy up.
 
