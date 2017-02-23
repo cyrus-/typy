@@ -2,11 +2,11 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages like ML and Haskell are widely appreciated for their elegance and power, but they can be difficult to adopt for reasons that have mostly to do with library availability and familiarity. Enter `tydy`, a  typed functional programming language embedded into Python as a library.
+Typed functional programming languages like ML and Haskell are a joy to work with once you get to know them, but they can be difficult to adopt for reasons that have mostly to do with library availability and for some folks, syntactic familiarity. Enter `tydy`, a  typed functional programming language embedded into Python as a library.
 
 Hello, World!
 -------------
-To give you a taste for how `tydy` works, consider a simple variation on "Hello, World!":
+To give you a taste for how `tydy` works, consider a simple functional variation on "Hello, World!":
 ```python 
 import tydy
 
@@ -19,11 +19,12 @@ def Hello():
 
 Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by `tydy`. For example, notice that the function `greet` above does not use the `return` keyword. As in other functional programming languages, *everything is an expression*.
 
-Features
---------
+Language Features
+-----------------
 * algebraic datatypes (i.e. tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
+* local type inference
 * clean two-way interoperability with Python
 
 If you're intrigued, check out the documentation for more details.
@@ -51,9 +52,9 @@ Because `tydy` is defined by translation to Python and understands Python values
 
 Furthermore, you can embed `tydy` code anywhere within a Python program, not just at the top level of a Python file. That means that you can integrate `tydy` into a codebase incrementally. (This is where languages like Scala and F# fall short -- portions of a codebase written in Java/C# cannot always interface naturally with portions written in Scala/F#.)
 
-Contribute!
------------
-I think `tydy` could bring statically typed functional programming to a huge number of people. For that to happen, I need you to join the tydy movement:
+Join the Fun
+------------
+I think `tydy` could bring statically typed functional programming to a huge number of people. Help make it happen:
 * star this repository, share, join our gitter
 * write a tydy library (ideas and progress)
 * contribute to the patreon campaign, individually or as an organizational sponsor
