@@ -2,10 +2,11 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages like ML and Haskell are widely recognized for their elegance and power, but they can be difficult to adopt for reasons that have mostly to do with library availability and familiarity. Enter `tydy`, a  typed functional programming language embedded into Python as a library.
+Typed functional programming languages like ML and Haskell are widely appreciated for their elegance and power, but they can be difficult to adopt for reasons that have mostly to do with library availability and familiarity. Enter `tydy`, a  typed functional programming language embedded into Python as a library.
 
 Hello, World!
 -------------
+To give you a taste for how `tydy` works, consider a simple variation on "Hello, World!":
 ```python 
 import tydy
 
