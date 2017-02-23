@@ -2,7 +2,7 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-`tydy` is a statically typed functional programming language embedded dynamically into Python.
+Typed functional programming languages like ML and Haskell are widely recognized for their elegance and power, but they can be difficult to adopt for reasons that have mostly to do with library availability and familiarity. Enter `tydy`, a  typed functional programming language embedded into Python as a library.
 
 Hello, World!
 -------------
