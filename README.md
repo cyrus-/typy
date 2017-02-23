@@ -4,8 +4,8 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 ==========================
 `tydy` is a statically typed functional programming language embedded dynamically into Python.
 
-Hello World!
-------------
+Hello, World!
+-------------
 ```python 
 import tydy
 
