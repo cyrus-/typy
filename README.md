@@ -31,7 +31,7 @@ Benefits
 --------
 Mathematics has a proven track record across problem domains. Functional languages build immediately upon the basic mathematical concepts taught in high-school algebra and introductory logic, e.g.
 
-* variables are given meaning by substitution
+* variables are placeholders given meaning by substitution
 * functions map from input of some type to output of some possibly different type
 * tuples allow you to group together multiple values, corresponding to the elementary logical concept of *conjunction*
 * sums capture the elementary logical concept of *disjunction*, e.g. a natural number can be either zero or the successor of another natural number.
@@ -41,9 +41,10 @@ Ultimately, functional programming kills fuzzy thinking. You won't miss it.
 More pragmatically:
 * You'll discover errors sooner.
 * You won't have to deal with `None` creeping up where it shouldn't.
-* Your code will run slightly faster (it's still running under Python, but the tydy compiler can use fast data representations underneath.)
+* Your code will run slightly faster (it's still running under Python, but the `tydy` compiler can choose fast data representations underneath.)
 * You will have to write fewer tests.
 * You will be less worried about test coverage.
+* Because `tydy` is embedded into Python, interoperability with any existing Python code is easy and doesn't cost anything.
 
 Contribute!
 -----------
