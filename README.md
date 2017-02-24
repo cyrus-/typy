@@ -2,25 +2,25 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, promise a way forward, but real concerns about library availability and familiarity have limited their adoption. Here are some relevant quotes:
+Typed functional programming languages, like OCaml and Haskell, are semantically elegant, but real concerns about library availability and familiarity have limited their adoption. Consider these very real quotes:
 
 > "You'll never get me to give up my obscure Python statistics packages!"
 
-> "Mathematical elegance is great and all, but my 3D-printed toaster only has Python bindings.
+> "Mathematical elegance is great and all, but my 3D-printed toaster has Python bindings."
 
-To address these all-too-real concerns, I'm leading the design and implementation of `tydy`: a typed functional programming language _embedded cleanly into Python as a library_!
+To address these all-too-real concerns, I'm building `tydy`: a typed functional programming language embedded into Python as a library!
 
 Hello, World!
 -------------
-Here is the heart of a tydy'd up "Hello, World!":
+Here is the heart of a tydy'd up functional "Hello, World!":
 ```python
 def greet(x : string): 
     "Hello, " + x + "!"
 print(greet("World"))
 ```
-Not so hard! Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
+Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type is inferred.
 
-This `tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
+The `tydy` code above lives inside a `tydy` component -- a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
 import tydy
 
@@ -30,19 +30,21 @@ def Hello():
         "Hello, " + x + "!"
     print(greet("World"))
 ```
-The body is parsed by Python, then typechecked and compiled (to Python, currently) by `tydy`. 
+The component body is parsed by Python, then typechecked and compiled (to Python, currently) by `tydy`. 
 
-To install `tydy`, you can just `pip install tydy`. Then, paste or type the code above into a file `hello.py` and run `python hello.py`.
+Installation
+------------
+To install `tydy`, you can just `pip install tydy`. Then, paste or type the code above into a file `hello.py` and run `python hello.py`. Currently, `tydy` requires Python 3.5+ (but the plan is to support Python 2.7+ in the future.)
 
 Language Features
 -----------------
-Simple functions like `greet` are, of course, just the beginning. `tydy` features essential typed functional goodies...
-* algebraic datatypes (i.e. tuples, labeled tuples and labeled sums)
+Simple functions like `greet` are, of course, just the beginning. `tydy` has all the typed functional essentials... (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.)
+* algebraic datatypes (tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
 * local type inference
 
-...plus, fast and clean two-way interoperability with Python. The manual.
+...plus, fast and clean two-way interoperability with Python. The manual gives the full details. If you're already familiar with a typed functional language, you might be interested in a side-by-side comparison with Standard ML and OCaml.
 
 Benefits
 --------
