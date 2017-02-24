@@ -2,11 +2,17 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, are a joy to work with, but there are a couple of significant barriers to adoption: library availability and for some folks, syntactic familiarity. Enter `tydy`, a typed functional programming language embedded cleanly into Python as a library.
+Typed functional programming languages, like OCaml and Haskell, are a joy to work with, but concerns about library availability and familiarity often discourage adoption. Enter `tydy`, a typed functional programming language embedded  into Python, as a library.
 
-Hello, World!
--------------
-To give you a first taste for how `tydy` works, consider a simple functional variation on "Hello, World!":
+For example, consider the following variation on "Hello, World!":
+```python
+def greet(x : string): 
+    "Hello, " + x + "!"
+print(greet("World"))
+```
+Notice that the function `greet` does not need to use the `return` keyword. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
+
+`tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The body is parsed by Python, but given static and dynamic meaning by `tydy`. The full "Hello, World!" example therefore looks like this:
 ```python 
 import tydy
 
@@ -16,18 +22,17 @@ def Hello():
         "Hello, " + x + "!"
     print(greet("World"))
 ```
-
-Definitions decorated with `@tydy.component` are parsed by Python, but given static and dynamic meaning by `tydy`. For example, notice that the function `greet` above does not use the `return` keyword. As in other functional programming languages, *everything is an expression*.
+To install `tydy`, you can just `pip install tydy`. Stick the code above into a file `hello.py` and run `python hello.py`. The whole thing is a library -- typechecking and compilation occurs "just-in-time" (once).
 
 Language Features
 -----------------
+Strings and simple functions like `greet` are, of course, just the beginning. `tydy` features the essential typed functional goodies...
 * algebraic datatypes (i.e. tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
 * local type inference
-* clean two-way interoperability with Python
 
-If you're intrigued, check out the documentation for more details.
+...plus, **fast and clean two-way interoperability with Python**.
 
 Benefits
 --------
