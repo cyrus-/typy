@@ -38,7 +38,7 @@ To install `tydy`, you can just `pip install tydy`. Then, paste or type the code
 
 Language Features
 -----------------
-Simple functions like `greet` are, of course, just the beginning. `tydy` has all the typed functional essentials... (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.) (Later, you'll see that some semantic expressions span multiple syntactic statements.)
+Simple functions like `greet` are, of course, just the beginning. `tydy` has all the typed functional essentials... 
 * algebraic datatypes (tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
