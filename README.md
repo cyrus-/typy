@@ -2,15 +2,15 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, promise a way forward, but real concerns about library availability and familiarity have limited adoption. Here's is a made-up but very real quote:
+Typed functional programming languages, like OCaml and Haskell, promise a way forward, but real concerns about library availability and familiarity have limited their adoption. Here's a made-up quote:
 
-> "You'll never get me to give up my obscure Python statistics packages. Please remove my name from your list."
+> "You'll never get me to give up my obscure Python statistics packages! Please remove my name from your list."
 
 Enter `tydy`, a typed functional programming language _embedded cleanly into Python as a library_.
 
 Hello, World!
 -------------
-Here is the heart of a tydy'd up "Hello, World!":
+Let's do it. Here is the heart of a tydy'd up "Hello, World!":
 ```python
 def greet(x : string): 
     "Hello, " + x + "!"
@@ -18,7 +18,7 @@ print(greet("World"))
 ```
 Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
 
-This `tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The body is parsed by Python, but given static and dynamic meaning by `tydy`. The full "Hello, World!" example therefore looks like this:
+This `tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
 import tydy
 
@@ -28,22 +28,26 @@ def Hello():
         "Hello, " + x + "!"
     print(greet("World"))
 ```
-To install `tydy`, you can just `pip install tydy`. Then, paste or type the code above into a file `hello.py` and run `python hello.py`. Typechecking and compilation occur "just-in-time" (i.e. once, then it's cached).
+The body is parsed by Python, then typechecked and compiled (to Python, currently) by `tydy`. 
+
+To install `tydy`, you can just `pip install tydy`. Then, paste or type the code above into a file `hello.py` and run `python hello.py`.
 
 Language Features
 -----------------
-Strings and simple functions like `greet` are, of course, just the beginning. `tydy` features the essential typed functional goodies...
+Simple functions like `greet` are, of course, just the beginning. `tydy` features essential typed functional goodies...
 * algebraic datatypes (i.e. tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
 * local type inference
 
-...plus, **fast and clean two-way interoperability with Python**.
+...plus, fast and clean two-way interoperability with Python. The manual.
 
 Benefits
 --------
+Perhaps you aren't convinced. Allow me to elaborate.
+
 ### Functional Programming
-The mathematical method has a proven track record across problem domains, to say the least. Functional programming is merely the mathematical method applied to programming. In other words, functional languages build immediately upon the basic mathematical concepts taught in high-school algebra and introductory logic, e.g.
+The mathematical method has a proven track record across problem domains (to say the least!) Functional programming is merely the mathematical method applied to programming. Functional languages build immediately upon the basic mathematical concepts taught in high-school algebra and introductory logic, e.g.
 
 * variables are placeholders given meaning by substitution
 * functions map from input of some type to output of some possibly different type
@@ -63,9 +67,9 @@ Because `tydy` is defined by translation to Python and understands Python values
 
 Furthermore, you can embed `tydy` code anywhere within a Python program, not just at the top level of a Python file. That means that you can integrate `tydy` into a codebase incrementally. (This is where languages like Scala and F# fall short -- portions of a codebase written in Java/C# cannot always interface naturally with portions written in Scala/F#.)
 
-Join the Fun
-------------
-I think `tydy` could bring statically typed functional programming to a huge number of people. Help make it happen:
+Let's make this happen.
+-----------------------
+I think `tydy` could bring statically typed functional programming out of the shadows. Help make it happen:
 * star this repository, share, join our gitter
 * write a tydy library (ideas and progress)
 * contribute to the patreon campaign, individually or as an organizational sponsor
