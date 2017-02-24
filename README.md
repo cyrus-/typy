@@ -2,17 +2,23 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, are a joy to work with, but concerns about library availability and familiarity often discourage adoption. Enter `tydy`, a typed functional programming language embedded  into Python, as a library.
+Typed functional programming languages, like OCaml and Haskell, promise a way forward, but real concerns about library availability and familiarity have limited adoption. Here's is a made-up but very real quote:
 
-For example, consider the following variation on "Hello, World!":
+> "You'll never get me to give up my obscure Python statistics packages. Please remove my name from your list."
+
+Enter `tydy`, a typed functional programming language _embedded cleanly into Python as a library_.
+
+Hello, World!
+-------------
+Here is the heart of a tydy'd up "Hello, World!":
 ```python
 def greet(x : string): 
     "Hello, " + x + "!"
 print(greet("World"))
 ```
-Notice that the function `greet` does not need to use the `return` keyword. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
+Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
 
-`tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The body is parsed by Python, but given static and dynamic meaning by `tydy`. The full "Hello, World!" example therefore looks like this:
+This `tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The body is parsed by Python, but given static and dynamic meaning by `tydy`. The full "Hello, World!" example therefore looks like this:
 ```python 
 import tydy
 
@@ -22,7 +28,7 @@ def Hello():
         "Hello, " + x + "!"
     print(greet("World"))
 ```
-To install `tydy`, you can just `pip install tydy`. Stick the code above into a file `hello.py` and run `python hello.py`. The whole thing is a library -- typechecking and compilation occurs "just-in-time" (once).
+To install `tydy`, you can just `pip install tydy`. Then, paste or type the code above into a file `hello.py` and run `python hello.py`. Typechecking and compilation occur "just-in-time" (i.e. once, then it's cached).
 
 Language Features
 -----------------
