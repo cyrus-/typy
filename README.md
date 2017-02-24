@@ -83,5 +83,5 @@ I think `tydy` could bring statically typed functional programming out of the sh
 
 License
 -------
-typy is released under the permissive MIT License, requiring only attribution in derivative works. See LICENSE for full terms.
+`tydy` is released under the permissive MIT License, requiring only attribution in derivative works. See LICENSE for full terms.
 
