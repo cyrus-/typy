@@ -2,21 +2,23 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, promise a way forward, but real concerns about library availability and familiarity have limited their adoption. Here's a made-up quote:
+Typed functional programming languages, like OCaml and Haskell, promise a way forward, but real concerns about library availability and familiarity have limited their adoption. Here are some relevant quotes:
 
-> "You'll never get me to give up my obscure Python statistics packages! Please remove my name from your list."
+> "You'll never get me to give up my obscure Python statistics packages!"
 
-Enter `tydy`, a typed functional programming language _embedded cleanly into Python as a library_.
+> "Mathematical elegance is great and all, but my 3D-printed toaster only has Python bindings.
+
+Enter `tydy`, a typed functional programming language _embedded cleanly into Python as a library_!
 
 Hello, World!
 -------------
-Let's do it. Here is the heart of a tydy'd up "Hello, World!":
+Here is the heart of a tydy'd up "Hello, World!":
 ```python
 def greet(x : string): 
     "Hello, " + x + "!"
 print(greet("World"))
 ```
-Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
+Not so hard! Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. (Later, you'll see that some semantic expressions span multiple syntactic statements.)
 
 This `tydy` code must be placed inside a `tydy` component, which is simply a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
