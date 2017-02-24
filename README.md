@@ -8,7 +8,7 @@ Typed functional programming languages, like OCaml and Haskell, promise a way fo
 
 > "Mathematical elegance is great and all, but my 3D-printed toaster only has Python bindings.
 
-Enter `tydy`, a typed functional programming language _embedded cleanly into Python as a library_!
+To address these all-too-real concerns, I'm leading the design and implementation of `tydy`: a typed functional programming language _embedded cleanly into Python as a library_!
 
 Hello, World!
 -------------
