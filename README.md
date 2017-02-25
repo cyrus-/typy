@@ -6,7 +6,7 @@ Typed functional programming languages, like OCaml and Haskell, help you structu
 
 > "You'll never get me to give up my obscure Python statistics routines!"
 
-> "Mathematical elegance is great and all, but my 3D-printed toaster has Python bindings."
+> "Mathematical elegance is great and all, but my 3D-printed toaster has great Python bindings."
 
 `tydy` addresses these concerns by embedding a typed functional programming language into Python as a library.
 
