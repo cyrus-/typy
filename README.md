@@ -2,13 +2,13 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, are semantically elegant, but real concerns about library availability and familiarity have limited their adoption. Consider these very real quotes:
+Typed functional programming languages, like OCaml and Haskell, help you structure programs sensibly, and promise many other benefits besides, but pragmatic concerns about library availability and familiarity have limited their adoption. Consider these totally-not-made-up quotes:
 
-> "You'll never get me to give up my obscure Python statistics packages!"
+> "You'll never get me to give up my obscure Python statistics routines!"
 
 > "Mathematical elegance is great and all, but my 3D-printed toaster has Python bindings."
 
-To address these all-too-real concerns, I'm building `tydy`: a typed functional programming language embedded into Python as a library!
+`tydy` addresses these concerns by embedding a typed functional programming language into Python as a library.
 
 Hello, World!
 -------------
@@ -18,7 +18,7 @@ def greet(x : string):
     "Hello, " + x + "!"
 print(greet("World"))
 ```
-Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type is inferred.
+Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred.
 
 The `tydy` code above lives inside a `tydy` component -- a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
@@ -30,11 +30,11 @@ def Hello():
         "Hello, " + x + "!"
     print(greet("World"))
 ```
-The component body is parsed by Python, then typechecked and compiled (to Python, currently) by `tydy`. 
+The component body is parsed by Python, then typechecked and compiled (to Python) by `tydy`. This needs to happen only once, even if some other component calls `greet` many times.
 
 Installation
 ------------
-To install `tydy`, you can just `pip install tydy`. Then, paste or type the code above into a file `hello.py` and run `python hello.py`. Currently, `tydy` requires Python 3.5+ (but the plan is to support Python 2.7+ in the future.)
+To install `tydy`, you can just `pip install tydy`. Then, paste the code above into a file `hello.py` and run `python hello.py`. Currently, `tydy` requires Python 3.5+ (but the plan is to support Python 2.7+ in the future.)
 
 Language Features
 -----------------
@@ -44,14 +44,16 @@ Simple functions like `greet` are, of course, just the beginning. `tydy` has all
 * parametric polymorphism
 * local type inference
 
-...plus, fast and clean two-way interoperability with Python. The manual gives the full details. If you're already familiar with a typed functional language, you might be interested in a side-by-side comparison with Standard ML and OCaml.
+...plus, fast and clean two-way interoperability with Python. 
+
+The manual gives the full details. If you're already familiar with a typed functional language, you might be interested in a side-by-side comparison with Standard ML and OCaml.
 
 Benefits
 --------
 Perhaps you aren't convinced. Allow me to elaborate.
 
 ### Functional Programming
-The mathematical method has a proven track record across problem domains (to say the least!) Functional programming is merely the mathematical method applied to programming. Functional languages build immediately upon the basic mathematical concepts taught in high-school algebra and introductory logic, e.g.
+The mathematical method has been the engine of technological innovation for centuries. Functional programming is the mathematical method applied to programming. In particular, functional languages build immediately upon basic mathematical concepts taught in high-school algebra and introductory logic:
 
 * variables are placeholders given meaning by substitution
 * functions map from input of some type to output of some possibly different type
