@@ -2,7 +2,7 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages, like OCaml and Haskell, help you structure programs sensibly, and promise many other benefits besides, but pragmatic concerns about library availability and familiarity have limited their adoption. Consider these totally-not-made-up quotes:
+Mathematics has driven science and  forward for centuries. Typed functional programming is, humbly, the mathematical method applied to programming. Unfortunately, pragmatic concerns about library availability and familiarity have limited the adoption of typed functional programming languages like OCaml and Haskell. Consider these totally-not-made-up quotes:
 
 > "You'll never get me to give up my obscure Python statistics routines!"
 
