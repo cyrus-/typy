@@ -2,13 +2,17 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Mathematics has driven science and  forward for centuries. Typed functional programming is, humbly, the mathematical method applied to programming. Unfortunately, pragmatic concerns about library availability and familiarity have limited the adoption of typed functional programming languages like OCaml and Haskell. Consider these totally-not-made-up quotes:
+Principled mathematical frameworks have driven science and technology forward for centuries. Typed functional programming is a deeply principled mathematical framework for computer programming that, as it happens, has become quite practical.
 
-> "You'll never get me to give up my obscure Python statistics routines!"
+Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming, while typed functional programming languages like OCaml and Haskell don't have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
 
-> "Mathematical elegance is great and all, but my 3D-printed toaster has great Python bindings."
+> "You'll never get me to give up my obscure Python statistics packages!"
 
-`tydy` addresses these concerns by embedding a typed functional programming language into Python as a library.
+> "Mathematical elegance is nice and all, but check this out, my 3D-printed toaster has Python bindings."
+
+> "Wait, what's an OCaml?"
+
+`tydy` aims to accelerate the adoption of typed functional programming by embedding a typed functional programming language cleanly into Python, as a library.
 
 Hello, World!
 -------------
