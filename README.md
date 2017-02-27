@@ -2,15 +2,15 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Principled mathematical frameworks have driven science and technology forward for centuries. Typed functional programming is a deeply principled mathematical framework for computer programming that, as it happens, has become quite practical.
+Typed functional programming languages encourage you to structure your programs mathematically, using simple primitives like tuples, finite variants and functions, rather than fundamentally complicated things like mutable objects, possibly-null references, multiple inheritance and pointers. The benefits are substantial: fewer errors, clearer code and peace of mind.
 
-Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming, while typed functional programming languages like OCaml and Haskell don't have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
+Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming and  typed functional programming languages like OCaml and Haskell don't have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
 
 > "You'll never get me to give up my obscure Python statistics packages!"
 
 > "Mathematical elegance is nice and all, but check this out, my 3D-printed toaster has Python bindings."
 
-> "Wait, what's an OCaml?"
+> "What's an OCaml?"
 
 `tydy` aims to accelerate the adoption of typed functional programming by embedding a typed functional programming language cleanly into Python, as a library.
 
@@ -18,11 +18,11 @@ Hello, World!
 -------------
 Here is the heart of a tydy'd up functional "Hello, World!":
 ```python
-def greet(x : string): 
+def hello(x : string): 
     "Hello, " + x + "!"
-print(greet("World"))
+print(hello("World"))
 ```
-Notice that the function `greet` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred.
+Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred.
 
 The `tydy` code above lives inside a `tydy` component -- a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
@@ -30,9 +30,9 @@ import tydy
 
 @tydy.component
 def Hello():
-    def greet(x : string): 
+    def hello(x : string): 
         "Hello, " + x + "!"
-    print(greet("World"))
+    print(hello("World"))
 ```
 The component body is parsed by Python, then typechecked and compiled (to Python) by `tydy`. This needs to happen only once, even if some other component calls `greet` many times.
 
