@@ -2,9 +2,9 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages encourage you to structure your programs mathematically, using simple primitives like tuples, finite variants and functions, rather than fundamentally complicated things like mutable objects, possibly-null references and multiple inheritance. The benefits are substantial: fewer errors, clearer code and peace of mind.
+Typed functional programming languages encourage you to structure your programs using simple mathematical primitives like tuples, finite variants and functions, rather than fundamentally complicated things like mutable objects, possibly-null references and multiple inheritance. The benefits are substantial: fewer errors, readable code and peace of mind.
 
-Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming and  typed functional programming languages like OCaml and Haskell don't have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
+Unfortunately, there's a catch-22: popular programming languages like Python don't yet have great support for typed functional programming while typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
 
 > "You'll never get me to give up my obscure Python statistics packages!"
 
@@ -22,7 +22,7 @@ def hello(x : string):
     "Hello, " + x + "!"
 print(hello("World"))
 ```
-Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. Following the approach of impure functional languages in the ML tradition, `tydy` allows side effects, like `print`ing, anywhere.
+Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. `tydy` allows side effects, like `print`ing, anywhere (i.e. it can be considered an impure functional language in the ML tradition.)
 
 The `tydy` code above lives inside a `tydy` component -- a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
