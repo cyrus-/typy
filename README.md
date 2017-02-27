@@ -22,7 +22,7 @@ def hello(x : string):
     "Hello, " + x + "!"
 print(hello("World"))
 ```
-Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred.
+Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. We follow the approach of impure functional languages in the ML tradition in that we allow side effects, like `print`ing, anywhere.
 
 The `tydy` code above lives inside a `tydy` component -- a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
@@ -34,15 +34,15 @@ def Hello():
         "Hello, " + x + "!"
     print(hello("World"))
 ```
-The component body is parsed by Python, then typechecked and compiled (to Python) by `tydy`. This needs to happen only once, even if some other component calls `greet` many times.
+The component body is parsed by Python, then typechecked and compiled (to Python) by `tydy`. This needs to happen only once, even if some other component calls `hello` many times.
 
 Installation
 ------------
-To install `tydy`, you can just `pip install tydy`. Then, paste the code above into a file `hello.py` and run `python hello.py`. Currently, `tydy` requires Python 3.5+ (but the plan is to support Python 2.7+ in the future.)
+To install `tydy`, you can just `pip install tydy`. Then, paste the code above into a file `hello.py` and run `python hello.py`. Currently, `tydy` requires Python 3.5+ (but the plan is to support Python 2.7+ in the near future.)
 
 Language Features
 -----------------
-Simple functions like `greet` are, of course, just the beginning. `tydy` has all the typed functional essentials... 
+Simple functions like `hello` are, of course, just the beginning. `tydy` has all the typed functional essentials... 
 * algebraic datatypes (tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
