@@ -22,7 +22,7 @@ def hello(x : string):
     "Hello, " + x + "!"
 print(hello("World"))
 ```
-Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. Following the approach of impure functional languages in the ML tradition, `tydy` allow side effects, like `print`ing, anywhere.
+Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. Following the approach of impure functional languages in the ML tradition, `tydy` allows side effects, like `print`ing, anywhere.
 
 The `tydy` code above lives inside a `tydy` component -- a Python definition decorated with `@tydy.component`. The full "Hello, World!" example therefore looks like this:
 ```python 
