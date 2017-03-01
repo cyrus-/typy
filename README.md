@@ -2,15 +2,13 @@ NOTE: Tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming languages encourage you to structure your programs using simple mathematical primitives like tuples, finite variants and functions, rather than fundamentally complicated things like mutable objects, possibly-null references and multiple inheritance. The benefits are substantial: fewer errors, readable code and peace of mind.
+Simply typed functional programming languages encourage you to structure your code using simple mathematical primitives like tuples, finite variants and functions, rather than fundamentally complicated primitives like mutable objects, classes and nullable references. The benefits are substantial: fewer errors, more readable code, reusability and peace of mind.
 
 Unfortunately, there's a catch-22: popular programming languages like Python don't yet have great support for typed functional programming while typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
 
 > "You'll never get me to give up my obscure Python statistics packages!"
 
 > "Mathematical elegance is nice and all, but check this out, my 3D-printed toaster has Python bindings."
-
-> "What's an OCaml?"
 
 `tydy` aims to accelerate the adoption of typed functional programming by embedding a typed functional programming language cleanly into Python, as a library.
 
