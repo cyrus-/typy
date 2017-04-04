@@ -14,7 +14,7 @@ Unfortunately, there's a catch-22: popular programming languages like Python don
 
 Hello, World!
 -------------
-Here is the heart of a tydy'd up functional "Hello, World!":
+Here is the heart of a `tydy`'d up functional "Hello, World!":
 ```python
 def hello(x : string): 
     "Hello, " + x + "!"
