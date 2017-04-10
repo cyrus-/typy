@@ -2,7 +2,7 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 
 `tydy` (pronounced "tidy") 
 ==========================
-Typed functional programming is the practice of structuring your code using simple mathematical primitives like tuples, finite variants and functions (rather than fundamentally complex primitives like mutable objects and nullable references.) The promised benefits are substantial: fewer errors, compositionality and peace of mind.
+Typed functional programming is the practice of structuring your code using simple mathematical primitives like tuples, finite variants and functions (rather than fundamentally complex primitives like mutable objects and nullable references.) The promised benefits are substantial.
 
 Unfortunately, there's a catch-22: popular programming languages like Python don't yet have great support for typed functional programming while typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
 
@@ -20,7 +20,7 @@ def hello(x : string):
     "Hello, " + x + "!"
 print(hello("World"))
 ```
-Notice that the function `hello` does not need to explicitly `return`. Like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. `tydy` allows side effects, like `print`ing, anywhere (i.e. it can be considered an impure functional language in the ML tradition.)
+Notice that the function `hello` does not need to explicitly `return` -- like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. `tydy` allows side effects, like `print`ing, anywhere (i.e. it can be considered an impure functional language in the ML tradition.)
 
 `tydy` code lives inside `tydy` components:
 ```python 
