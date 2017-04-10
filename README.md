@@ -1,5 +1,7 @@
 NOTE: tydy is still under development and this repository is not yet intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
 
+---
+
 ![tydy: simply typed functional programming inside Python](https://github.com/cyrus-/tydy/raw/master/tydy-logo-goudy.png)
 
   
