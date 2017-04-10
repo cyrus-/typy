@@ -3,9 +3,9 @@ import ast
 
 import pytest
 
-from tydy.util.testing import translation_eq
-
+import tydy
 from tydy import *
+from tydy.util.testing import translation_eq
 
 # Type Formation
 class TestTypeFormation:
@@ -148,7 +148,7 @@ def test_stdfn_arg_count_incorrect():
     def test():
         """This is a docstring."""
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestStdFnArgCountZero:
@@ -181,7 +181,7 @@ def test_stdfn_arg_count_zero_incorrect():
     def f(x):
         """This is a docstring."""
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_stdfn_varargs_unsupported():
@@ -190,7 +190,7 @@ def test_stdfn_varargs_unsupported():
     def f(*x):
         """This is a docstring."""
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_stdfn_kwargs_unsupported():
@@ -199,7 +199,7 @@ def test_stdfn_kwargs_unsupported():
     def f(**x):
         """This is a docstring."""
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_stdfn_defaults_unsupported():
@@ -208,7 +208,7 @@ def test_stdfn_defaults_unsupported():
     def f(x=()):
         """This is a docstring."""
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 class TestStdFnPass:
@@ -390,7 +390,7 @@ def test_stdfn_sig_args_too_many():
     def test(x):
         {unit, unit}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_stdfn_sig_args_too_few():
@@ -398,7 +398,7 @@ def test_stdfn_sig_args_too_few():
     def test(x, y):
         {unit}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestStdFnSigNamedArgs:
@@ -423,7 +423,7 @@ def test_stdfn_sig_named_args_too_many():
     def test(x):
         {x : unit, y : unit}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_stdfn_sig_named_args_too_few():
@@ -431,7 +431,7 @@ def test_stdfn_sig_named_args_too_few():
     def test(x, y):
         {x : unit}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_stdfn_sig_named_args_wrong_names():
@@ -439,7 +439,7 @@ def test_stdfn_sig_named_args_wrong_names():
     def test(x):
         {y : unit}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_stdfn_sig_named_args_wrong_names2():
@@ -447,7 +447,7 @@ def test_stdfn_sig_named_args_wrong_names2():
     def test(x, y):
         {x : unit, z : unit}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestStdFnSigEvalTypes:
@@ -537,7 +537,7 @@ def test_redundant_sigs_4():
     def f(x, y):
         {boolean, boolean}
         pass
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 class TestRedundantSigs5:
@@ -563,7 +563,7 @@ def test_redundant_sigs_6():
     @fn_ty
     def test(x, y):
         {boolean, unit}
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 # unit
@@ -611,7 +611,7 @@ def test_unit_ascription_toomany():
     @fn
     def test():
         (1, 2) [: unit]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_unit_bad_ascription():
@@ -748,7 +748,7 @@ def test_unit_Lt():
     def f():
         x [: unit] = ()
         x < ()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_unit_LtE():
@@ -756,7 +756,7 @@ def test_unit_LtE():
     def f():
         x [: unit] = ()
         x <= ()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_unit_Gt():
@@ -764,7 +764,7 @@ def test_unit_Gt():
     def f():
         x [: unit] = ()
         x > ()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_unit_GtE():
@@ -772,7 +772,7 @@ def test_unit_GtE():
     def f():
         x [: unit] = ()
         x >= ()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_unit_In():
@@ -780,7 +780,7 @@ def test_unit_In():
     def f():
         x [: unit] = ()
         x in ()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_unit_NotIn():
@@ -788,7 +788,7 @@ def test_unit_NotIn():
     def f():
         x [: unit] = ()
         x not in ()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 # Variables
@@ -832,7 +832,7 @@ def test_variable_lookup_notfound():
     def test(x):
         {x : boolean}
         y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
     
 class TestAssignSyn:
@@ -884,7 +884,7 @@ def test_assign_bad():
     def test(x):
         {unit}
         x = True [: boolean]  # noqa
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestAssignAscription:
@@ -985,7 +985,7 @@ def test_assign_multiple_ascription_bad():
     @fn
     def test():
         x [: boolean] = y [: unit] = True
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_assign_multiple_ascription_bad_2():
@@ -993,7 +993,7 @@ def test_assign_multiple_ascription_bad_2():
     def test(x):
         {x : boolean}
         x [: boolean] = y [: unit] = True
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_assign_multiple_ascription_bad_3():
@@ -1001,7 +1001,7 @@ def test_assign_multiple_ascription_bad_3():
     def test(x):
         {x : unit}
         x [: boolean] = y [: boolean] = True
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestSimpleLetSyn:
@@ -1045,7 +1045,7 @@ def test_let_multiple():
     def test():
         let [x : boolean] = y = True # noqa
         x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestSimpleLetUnderscore:
@@ -1206,7 +1206,7 @@ def test_with_binding_block_local():
             z = x * x
             y + z
         y + z
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 class TestRecursiveFn:
@@ -1231,7 +1231,7 @@ def test_nonrecursive_fn():
     def f():
         {}
         f()
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 class TestShadowFnName: 
@@ -1463,7 +1463,7 @@ def test_boolean_ascription_bad():
     @fn
     def test():
         Bad [: boolean]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestBooleanNot:
@@ -1489,7 +1489,7 @@ def test_boolean_Invert():
     def test():
         x [: boolean] = True
         ~x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_UAdd():
@@ -1497,7 +1497,7 @@ def test_boolean_UAdd():
     def test():
         x [: boolean] = True
         +x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_USub():
@@ -1505,7 +1505,7 @@ def test_boolean_USub():
     def test():
         x [: boolean] = True
         -x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestBooleanCompareOps:
@@ -1546,7 +1546,7 @@ def test_boolean_Lt():
         x [: boolean] = True
         y [: boolean] = False
         x < y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_LtE():
@@ -1555,7 +1555,7 @@ def test_boolean_LtE():
         x [: boolean] = True
         y [: boolean] = False
         x <= y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_Gt():
@@ -1564,7 +1564,7 @@ def test_boolean_Gt():
         x [: boolean] = True
         y [: boolean] = False
         x > y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_GtE():
@@ -1573,7 +1573,7 @@ def test_boolean_GtE():
         x [: boolean] = True
         y [: boolean] = False
         x >= y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_In():
@@ -1582,7 +1582,7 @@ def test_boolean_In():
         x [: boolean] = True
         y [: boolean] = False
         x in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_boolean_NotIn():
@@ -1591,7 +1591,7 @@ def test_boolean_NotIn():
         x [: boolean] = True
         y [: boolean] = False
         x not in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestBooleanBoolOps:
@@ -1750,21 +1750,21 @@ def test_Integer_ascription_on_ieee():
     @fn
     def test():
         3.0 [: num]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_Integer_ascription_on_cplx():
     @fn
     def test():
         3.0j [: num]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_Integer_ascription_on_stringing():
     @fn
     def test():
         "3" [: num]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestIntegerUnaryOps:
@@ -1799,7 +1799,7 @@ def test_Integer_no_not():
     @fn
     def test():
         not (3 [: num])
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestIntegerBinops:
@@ -1870,7 +1870,7 @@ def test_Integer_num_div():
     def test():
         x [: num] = 3
         x / x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestIntegerCompareOps:
@@ -1927,7 +1927,7 @@ def test_num_In():
         x [: num] = 123
         y [: num] = 456
         x in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_num_NotIn():
@@ -1936,7 +1936,7 @@ def test_num_NotIn():
         x [: num] = 123
         y [: num] = 456
         x not in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_num_And():
@@ -1945,7 +1945,7 @@ def test_num_And():
         x [: num] = 123
         y [: num] = 456
         x and y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_num_Or():
@@ -1954,7 +1954,7 @@ def test_num_Or():
         x [: num] = 123
         y [: num] = 456
         x or y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 #
@@ -2109,14 +2109,14 @@ def test_ieee_ascription_on_cplx():
     @fn
     def test():
         3.0j [: ieee]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_ascription_on_stringing():
     @fn
     def test():
         "3" [: ieee]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestIEEEUnaryOps:
@@ -2147,7 +2147,7 @@ def test_ieee_no_not():
     @fn
     def test():
         not (3 [: ieee])
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_no_invert():
@@ -2155,7 +2155,7 @@ def test_ieee_no_invert():
     def test():
         x [: ieee] = 3
         ~x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestIEEEBinops:
@@ -2209,7 +2209,7 @@ def test_ieee_no_lshift():
     def test():
         x [: ieee] = 3
         x << x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_no_rshift():
@@ -2217,7 +2217,7 @@ def test_ieee_no_rshift():
     def test():
         x [: ieee] = 3
         x >> x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_no_bitor():
@@ -2225,7 +2225,7 @@ def test_ieee_no_bitor():
     def test():
         x [: ieee] = 3
         x | x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_no_bitxor():
@@ -2233,7 +2233,7 @@ def test_ieee_no_bitxor():
     def test():
         x [: ieee] = 3
         x ^ x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_no_bitand():
@@ -2241,7 +2241,7 @@ def test_ieee_no_bitand():
     def test():
         x [: ieee] = 3
         x & x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
  
 class TestIEEECompareOps:
@@ -2298,7 +2298,7 @@ def test_ieee_In():
         x [: ieee] = 123
         y [: ieee] = 456
         x in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_NotIn():
@@ -2307,7 +2307,7 @@ def test_ieee_NotIn():
         x [: ieee] = 123
         y [: ieee] = 456
         x not in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_And():
@@ -2316,7 +2316,7 @@ def test_ieee_And():
         x [: ieee] = 123
         y [: ieee] = 456
         x and y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_ieee_Or():
@@ -2325,7 +2325,7 @@ def test_ieee_Or():
         x [: ieee] = 123
         y [: ieee] = 456
         x or y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestNumIEEEDiv:
@@ -2484,14 +2484,14 @@ def test_cplx_Intro_tuple_short():
     @fn
     def f():
         (0,) [: cplx]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_cplx_Intro_tuple_long():
     @fn
     def f():
         (0, 0, 0) [: cplx]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 class TestcplxIntroTuple:
@@ -2549,7 +2549,7 @@ def test_cplx_Intro_tuple_rl_bad():
     def f():
         x [: boolean] = True
         (x, 0) [: cplx]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_cplx_Intro_tuple_im_bad():
@@ -2557,14 +2557,14 @@ def test_cplx_Intro_tuple_im_bad():
     def f():
         x [: boolean] = True
         (0, x) [: cplx]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_cplx_ascription_on_stringing():
     @fn
     def test():
         "3" [: cplx]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestcplxUnaryOps:
@@ -2595,7 +2595,7 @@ def test_cplx_no_not():
     @fn
     def test():
         not (3 [: cplx])
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_no_invert():
@@ -2603,7 +2603,7 @@ def test_cplx_no_invert():
     def test():
         x [: cplx] = 3
         ~x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestIEEEBinopsCC:
@@ -2653,7 +2653,7 @@ def test_cplx_no_mod():
     def test():
         x [: cplx] = 3
         x % x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_no_lshift():
@@ -2661,7 +2661,7 @@ def test_cplx_no_lshift():
     def test():
         x [: cplx] = 3
         x << x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_no_rshift():
@@ -2669,7 +2669,7 @@ def test_cplx_no_rshift():
     def test():
         x [: cplx] = 3
         x >> x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_no_bitor():
@@ -2677,7 +2677,7 @@ def test_cplx_no_bitor():
     def test():
         x [: cplx] = 3
         x | x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_no_bitxor():
@@ -2685,7 +2685,7 @@ def test_cplx_no_bitxor():
     def test():
         x [: cplx] = 3
         x ^ x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_no_bitand():
@@ -2693,7 +2693,7 @@ def test_cplx_no_bitand():
     def test():
         x [: cplx] = 3
         x & x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
  
 class TestcplxCompareOps:
@@ -2734,7 +2734,7 @@ def test_cplx_Lt():
         x [: cplx] = 123
         y [: cplx] = 456
         x < y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_LtE():
@@ -2743,7 +2743,7 @@ def test_cplx_LtE():
         x [: cplx] = 123
         y [: cplx] = 456
         x <= y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_Gt():
@@ -2752,7 +2752,7 @@ def test_cplx_Gt():
         x [: cplx] = 123
         y [: cplx] = 456
         x > y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_GtE():
@@ -2761,7 +2761,7 @@ def test_cplx_GtE():
         x [: cplx] = 123
         y [: cplx] = 456
         x >= y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_In():
@@ -2770,7 +2770,7 @@ def test_cplx_In():
         x [: cplx] = 123
         y [: cplx] = 456
         x in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_NotIn():
@@ -2779,7 +2779,7 @@ def test_cplx_NotIn():
         x [: cplx] = 123
         y [: cplx] = 456
         x not in y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_And():
@@ -2788,7 +2788,7 @@ def test_cplx_And():
         x [: cplx] = 123
         y [: cplx] = 456
         x and y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_cplx_Or():
@@ -2797,7 +2797,7 @@ def test_cplx_Or():
         x [: cplx] = 123
         y [: cplx] = 456
         x or y
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestcplxComponents():
@@ -2938,7 +2938,7 @@ def test_string_num_Intro():
     @fn
     def test(self):
         123 [: string]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestStringAdd:
@@ -3195,7 +3195,7 @@ def test_tpl_Tuple_Intro_few():
         x [: string] = "test"
         z [: tpl[string, num]] = (x,)
         z
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_tpl_Tuple_Intro_many():
@@ -3204,7 +3204,7 @@ def test_tpl_Tuple_Intro_many():
         x [: string] = "test"
         z [: tpl[string, string, num]] = (x, x)
         z
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestTplTupleIncIntro():
@@ -3275,14 +3275,14 @@ def test_tpl_Dict_Intro_few():
     @fn
     def test():
         z1 [: tpl[string, num]] = {0 : "test"}
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_tpl_Dict_Intro_many():
     @fn 
     def test():
         z1 [: tpl[string, num]] = {0 : "test", 1 : 0, 2 : 0}
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestTplDictIncIntro():
@@ -3313,7 +3313,7 @@ def test_tpl_Dict_empty_lbl():
         x [: string] = "test"
         z1 [: tpl] = {'' : x}
         z1
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_tpl_Dict_neg_lbl():
@@ -3322,7 +3322,7 @@ def test_tpl_Dict_neg_lbl():
         x [: string] = "test"
         z1 [: tpl] = {-1 : x}
         z1
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 def test_tpl_Dict_duplicate_lbl():
@@ -3332,7 +3332,7 @@ def test_tpl_Dict_duplicate_lbl():
         y [: num] = 0
         z1 [: tpl] = {lbl0: x, "lbl0": y}
         z1
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         test.typecheck()
 
 class TestTplXIntro:
@@ -3533,7 +3533,7 @@ def test_finsum_bad_label():
     @fn
     def f():
         A [: finsum['B']]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_bad_label_2():
@@ -3541,14 +3541,14 @@ def test_finsum_bad_label_2():
     def f(x):
         {x : num}
         A(x) [: finsum['B': num]]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_missing_payload():
     @fn
     def f():
         A [: finsum['A': num]]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_bad_args_1():
@@ -3556,7 +3556,7 @@ def test_finsum_bad_args_1():
     def f(x):
         {x : num}
         A(*x) [: finsum['A': num]]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_bad_args_2():
@@ -3564,7 +3564,7 @@ def test_finsum_bad_args_2():
     def f(x):
         {x : num}
         A(**x) [: finsum['A': num]]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_bad_args_3():
@@ -3572,7 +3572,7 @@ def test_finsum_bad_args_3():
     def f(x):
         {x : num}
         A(x=x) [: finsum['A': num]]
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_match_bad_label():
@@ -3581,7 +3581,7 @@ def test_finsum_match_bad_label():
         {x : finsum['B']}
         match[x]
         with A: x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_match_bad_label_2():
@@ -3590,7 +3590,7 @@ def test_finsum_match_bad_label_2():
         {x : finsum['B': num]}
         match[x]
         with A(x): x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_match_missing_payload():
@@ -3599,7 +3599,7 @@ def test_finsum_match_missing_payload():
         {x : finsum['A': num]}
         match[x]
         with A: x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_match_bad_args_1():
@@ -3608,7 +3608,7 @@ def test_finsum_match_bad_args_1():
         {x : finsum['A': num]}
         match[x]
         with A(*x): x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_match_bad_args_2():
@@ -3617,7 +3617,7 @@ def test_finsum_match_bad_args_2():
         {x : finsum['A': num]}
         match[x]
         with A(**x): x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 def test_finsum_match_bad_args_3():
@@ -3626,7 +3626,7 @@ def test_finsum_match_bad_args_3():
         {x : finsum['A': num]}
         match[x]
         with A(x=x): x
-    with pytest.raises(typy.TypeError):
+    with pytest.raises(tydy.TyError):
         f.typecheck()
 
 # 
@@ -3722,6 +3722,7 @@ class TestEquirecNumList:
 # 
 # TyRecFnExpr
 # 
+
 from tydy.core._tyexps import TyRecFn, TyApExpr 
 
 class TestTyRecFnExpr:

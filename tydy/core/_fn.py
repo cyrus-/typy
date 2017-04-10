@@ -7,6 +7,7 @@ import typy.util.astx as astx
 
 import _product
 import _boolean
+import _errors
 
 #
 # fn
@@ -125,7 +126,7 @@ class fn(typy.FnType):
                 if (sig_idx[0] != arg_types) \
                         or (sig_idx[1] != Ellipsis 
                             and sig_idx[1] != return_type):
-                    raise typy.TypeError(
+                    raise _errors.TyError(
                         "Function signature and ascription do not match.", 
                         body[0])
                 body = tree._post_sig_body = body[1:]
@@ -133,7 +134,7 @@ class fn(typy.FnType):
                 tree._post_sig_body = body
 
         if len(body) == 0:
-            raise typy.TypeError("Function body is empty.", tree)
+            raise _errors.TyError("Function body is empty.", tree)
 
         body_block = tree.body_block = Block.from_stmts(body)
         body_block.ana(ctx, return_type)
@@ -156,7 +157,7 @@ class fn(typy.FnType):
                         inc_idx = ((), Ellipsis)
                         tree._post_sig_body = body
                     else:
-                        raise typy.TypeError("Missing argument signature.", 
+                        raise _errors.TyError("Missing argument signature.", 
                                              tree)
                 else:
                     inc_idx = sig_idx
@@ -166,14 +167,14 @@ class fn(typy.FnType):
                     tree._post_sig_body = body
                 else:
                     if inc_idx[0] != sig_idx[0]:
-                        raise typy.TypeError(
+                        raise _errors.TyError(
                             "Argument signature and ascription do not match.",
                             body[0])
                     inc_idx = sig_idx
                     body = tree._post_sig_body = body[1:]
 
         if len(body) == 0:
-            raise typy.TypeError("Function body is empty.", tree)
+            raise _errors.TyError("Function body is empty.", tree)
 
         (arg_types, return_type) = inc_idx
         if return_type != Ellipsis:
@@ -223,17 +224,17 @@ class fn(typy.FnType):
             n_keys = len(keys)
             n_args = len(arg_names)
             if n_keys != n_args:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Function specifies {0} arguments, "
                     "but function signature specifies {1} arguments."
                     .format(n_args, n_keys), value)
             for key, value, arg_name in zip(keys, values, arg_names):
                 if not isinstance(key, ast.Name):
-                    raise typy.TypeError(
+                    raise _errors.TyError(
                         "Argument name must be an identiifer.", key)
                 sig_arg_name = key.id
                 if sig_arg_name != arg_name:
-                    raise typy.TypeError(
+                    raise _errors.TyError(
                         "Function specifies argument name {0}, but function "
                         "signature specifies argument name {1}."
                         .format(arg_name, key), key)
@@ -243,14 +244,14 @@ class fn(typy.FnType):
             n_elts = len(elts)
             n_args = len(arg_names)
             if n_elts != n_args:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Function specifies {0} arguments, but function"
                     "signature specifies {1} arguments."
                     .format(n_args, n_elts), value)
             for elt in elts:
                 arg_types.append(static_env.eval_expr_ast(elt))
         else:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Argument signature must have the form of either a set "
                 "or dict literal.", value)
         return tuple(arg_types)
@@ -266,23 +267,23 @@ class fn(typy.FnType):
     def _setup_args(ctx, args, arg_types, tree):
         # var and kw args are not supported
         if args.vararg:
-            raise typy.TypeError("Varargs are not supported.", args.vararg)
+            raise _errors.TyError("Varargs are not supported.", args.vararg)
         if args.kwarg:
-            raise typy.TypeError("Kwargs are not supported.", args.kwarg)
+            raise _errors.TyError("Kwargs are not supported.", args.kwarg)
         if len(args.defaults) != 0:
-            raise typy.TypeError("Defaults are not supported.", tree)
+            raise _errors.TyError("Defaults are not supported.", tree)
 
         variables = ctx.variables
         arguments = args.args
         n_args, n_arg_types = len(arguments), len(arg_types)
         if n_args != n_arg_types:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Type specifies {0} arguments but function has {1}.".format(
                     n_arg_types, n_args), 
                 tree)
         for arg, arg_type in zip(arguments, arg_types):
             if not isinstance(arg, ast.Name):
-                raise typy.TypeError("Argument must be an identifier.", arg)
+                raise _errors.TyError("Argument must be an identifier.", arg)
             arg_id = arg.id
             uniq_id = ctx.generate_fresh_id(arg_id)
             arg.uniq_id = uniq_id
@@ -347,7 +348,7 @@ class fn(typy.FnType):
         try:
             (uniq_id, ty) = ctx.variables[id]
         except KeyError:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Variable not found in context: " + id, e)
         e.uniq_id = uniq_id
         return ty
@@ -361,18 +362,18 @@ class fn(typy.FnType):
         args, keywords, starargs, kwargs = (e.args, e.keywords, e.starargs, 
                                             e.kwargs)
         if len(keywords) != 0 or kwargs is not None:
-            raise typy.TypeError("Keyword arguments are not supported.",
+            raise _errors.TyError("Keyword arguments are not supported.",
                 e)
         if starargs is not None:
-            raise typy.TypeError("Star arguments are not supported.",
+            raise _errors.TyError("Star arguments are not supported.",
                 e)
         arg_types, return_type = self.idx
         n_args = len(args)
         n_arg_types = len(arg_types)
         if n_args < n_arg_types:
-            raise typy.TypeError("Too few arguments.", e)
+            raise _errors.TyError("Too few arguments.", e)
         elif n_args > n_arg_types:
-            raise typy.TypeError("Too many arguments.", args[n_arg_types])
+            raise _errors.TyError("Too many arguments.", args[n_arg_types])
         for (arg, arg_type) in zip(args, arg_types):
             ctx.ana(arg, arg_type)
         return return_type 
@@ -461,10 +462,11 @@ class fn(typy.FnType):
                 pat, 
                 scrutinee_trans)
             if not pat.bindings.keys() == binding_translations.keys():
-                raise typy.UsageError("All bindings must have translations.")
+                raise typy.TypyExtensionError(
+                    "All bindings must have translations.")
             for binding_translation in binding_translations.itervalues():
                 if not isinstance(binding_translation, ast.expr):
-                    raise typy.UsageError(
+                    raise typy.TypyExtensionError(
                         "Binding translation must be an expression.")
             ctx_update = pat.ctx_update
             ctx.variables.push(ctx_update)
@@ -533,7 +535,7 @@ class Block(object):
         first_items = items[0:-1]
         last_item = items[-1]
         if not isinstance(last_item, BlockExpr):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Block ends with a binding.",
                 last_item.stmts[0])
         return cls(first_items, last_item)
@@ -547,12 +549,12 @@ class Block(object):
                 if (isinstance(stmt, ast.With) and
                         not BlockWithBinding.is_with_binding(stmt)):
                     if stmt.optional_vars is not None:
-                        raise typy.TypeError("Invalid rule form.", stmt)
+                        raise _errors.TyError("Invalid rule form.", stmt)
                     match_rules.append(stmt)
                     continue
                 else:
                     if len(match_rules) == 0:
-                        raise typy.TypeError(
+                        raise _errors.TyError(
                             "No match rules.", match_head)
                     yield BlockMatchExpr(match_head, match_rules)
                     match_head = match_rules = None
@@ -568,7 +570,7 @@ class Block(object):
                     if (BlockWithBinding.is_with_binding(stmt)):
                         yield BlockWithBinding(stmt)
                     else:
-                        raise typy.TypeError("Invalid with form.", stmt)
+                        raise _errors.TyError("Invalid with form.", stmt)
                 elif isinstance(stmt, ast.Assign):
                     yield BlockLet(stmt)
                 elif isinstance(stmt, ast.If):
@@ -579,11 +581,11 @@ class Block(object):
                     if BlockFunctionDefExpr.check_valid_function_def(stmt):
                         yield BlockFunctionDefExpr(stmt)
                 else:
-                    raise typy.TypeError("Statement form not supported.", stmt)
+                    raise _errors.TyError("Statement form not supported.", stmt)
         # finish making match expression at the end of the block if necessary
         if match_head is not None:
             if len(match_rules) == 0:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "No match rules.", match_head)
             yield BlockMatchExpr(match_head, match_rules)
 
@@ -630,13 +632,13 @@ class BlockItem(object):
         self.stmts = stmts
 
     def check_and_push(self, ctx):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
     def pop(self, ctx):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
     def translate(self, ctx):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
 class BlockBinding(BlockItem):
     pass
@@ -652,19 +654,19 @@ class BlockExpr(BlockItem):
         return self.translate_do(ctx)
 
     def ana(self, ctx, ty):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
     def syn(self, ctx):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
     def translate_do(self, ctx):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
     def translate_return(self, ctx):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
     def translate_assign(self, ctx, assign_to):
-        raise typy.UsageError("Missing implementation.")
+        raise _errors.TydyInternalError("Missing implementation.")
 
 class BlockLet(BlockBinding):
     def __init__(self, stmt):
@@ -685,7 +687,7 @@ class BlockLet(BlockBinding):
         elif isinstance(asc, typy.IncompleteType):
             ty = ctx.ana_intro_inc(value, asc)
         else:
-            raise typy.UsageError("Unexpected ascription from _get_asc.")
+            raise _errors.TydyInternalError("Unexpected ascription from _get_asc.")
         # 3. update context with the bound variables
         self._check_and_push_targets(ctx, targets, ty)
 
@@ -711,7 +713,7 @@ class BlockLet(BlockBinding):
                 # continues if so
                 if isinstance(target_value, ast.Name) and target_value.id == "let":
                     if len(targets) != 1:
-                        raise typy.TypeError(
+                        raise _errors.TyError(
                             "Cannot use multiple assignment form with let.", targets)
                     if isinstance(slice_, ast.Index):
                         # e.g. let [x] = e
@@ -729,16 +731,16 @@ class BlockLet(BlockBinding):
                             if asc is None:
                                 asc = cur_asc
                             elif asc != cur_asc:
-                                raise typy.TypeError(
+                                raise _errors.TyError(
                                     "Inconsistent ascriptions", asc_ast)
                             target.pat = pat
                             target.asc_ast = asc_ast
                             continue
                         else:
-                            raise typy.TypeError("Invalid let format.", 
+                            raise _errors.TyError("Invalid let format.", 
                                                  slice_)
                     else:
-                        raise typy.TypeError("Invalid let format.", slice_)
+                        raise _errors.TyError("Invalid let format.", slice_)
                 # if not, target must be of the form pat [: t] 
                 elif isinstance(slice_, ast.Slice):
                     lower, asc_ast, step = (slice_.lower, slice_.upper, 
@@ -748,18 +750,18 @@ class BlockLet(BlockBinding):
                         if asc is None:
                             asc = cur_asc
                         elif asc != cur_asc:
-                            raise typy.TypeError(
+                            raise _errors.TyError(
                                 "Inconsistent ascriptions", asc_ast)
                         target.pat = target_value
                         target.asc_ast = asc_ast
                     else:
-                        raise typy.TypeError(
+                        raise _errors.TyError(
                             "Invalid ascription format.", slice_)
                 else:               
-                    raise typy.TypeError(
+                    raise _errors.TyError(
                         "Invalid ascription format.", slice_)
             else:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Unknown assignment form.", target)
         return asc
 
@@ -897,11 +899,11 @@ class BlockWithBinding(BlockBinding):
             ty = asc
             body_block.ana(ctx, asc)
         elif isinstance(asc, typy.IncompleteType):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Cannot provide incomplete type ascription on with binding.", 
                 binding)
         else:
-            raise typy.UsageError("Unexpected ascription.")
+            raise _errors.TydyInternalError("Unexpected ascription.")
         ctx.ana_pat(pat, ty)
         _push_pat_bindings(ctx, pat)
 
@@ -919,13 +921,13 @@ class BlockWithBinding(BlockBinding):
                         asc = typy._process_asc_ast(ctx, upper)
                         return lower, asc
                     else:
-                        raise typy.TypeError("Invalid ascription format.", slice)
+                        raise _errors.TyError("Invalid ascription format.", slice)
                 else:
-                    raise typy.TypeError("Invalid ascription format.", slice)
+                    raise _errors.TyError("Invalid ascription format.", slice)
             else:
-                raise typy.TypeError("Invalid with format.", value)
+                raise _errors.TyError("Invalid with format.", value)
         else:
-            raise typy.TypeError("Invalid with format.", binding)
+            raise _errors.TyError("Invalid with format.", binding)
 
     def pop(self, ctx):
         ctx.variables.pop()
@@ -1030,7 +1032,7 @@ class BlockMatchExpr(BlockExpr):
                     e.asc_ast = None
                     return True
                 else:
-                    raise typy.TypeError("Invalid match scrutinee.", e)
+                    raise _errors.TyError("Invalid match scrutinee.", e)
         return False
 
     @classmethod
@@ -1047,9 +1049,9 @@ class BlockMatchExpr(BlockExpr):
                         e.asc_ast = upper
                         return True
                     else:
-                        raise typy.TypeError("Invalid ascription format.", slice)
+                        raise _errors.TyError("Invalid ascription format.", slice)
                 else:
-                    raise typy.TypeError("Invalid ascription format.", slice)
+                    raise _errors.TyError("Invalid ascription format.", slice)
         return False
 
     @classmethod
@@ -1060,7 +1062,7 @@ class BlockMatchExpr(BlockExpr):
     def ana(self, ctx, ty):
         asc = self._get_asc(ctx)
         if asc is not None and asc != ty:
-            raise typy.TypeError("Inconsistent match ascription.", 
+            raise _errors.TyError("Inconsistent match ascription.", 
                                  self.head_stmt)
 
         scrutinee_ty = ctx.syn(self.scrutinee)
@@ -1103,7 +1105,7 @@ class BlockMatchExpr(BlockExpr):
         if asc_ast is not None:
             asc = typy._process_asc_ast(ctx, asc_ast)
             if isinstance(asc, typy.IncompleteType):
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Block expression ascriptions cannot be incomplete types.",
                     asc_ast)
             self.asc = asc
@@ -1220,16 +1222,16 @@ class BlockFunctionDefExpr(BlockBinding, BlockExpr):
                     stmt.asc_ast = decorator_list[0]
                     return True
                 else:
-                    raise typy.TypeError(
+                    raise _errors.TyError(
                         """Too many decorators.""", stmt)
-        raise typy.TypeError("Not a function definition.", stmt)
+        raise _errors.TyError("Not a function definition.", stmt)
 
     @classmethod
     def _check_valid_args(cls, args):
         if (args.vararg is not None 
                 or args.kwarg is not None
                 or len(args.defaults) != 0):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Invalid function argument format.", args)
         return True
 
@@ -1270,7 +1272,7 @@ class BlockFunctionDefExpr(BlockBinding, BlockExpr):
         stmt = self.stmt
         asc_ast = stmt.asc_ast
         if asc_ast is None:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Cannot synthesize a type for function definition "
                 "without ascription.", stmt)
         else:

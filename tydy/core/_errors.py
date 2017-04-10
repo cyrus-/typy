@@ -2,7 +2,9 @@
 
 import typy
 
-class TydyException(typy.TypyException): pass
-class TyError(typy.TyError): pass
-class KindError(typy.KindError): pass
+class TydyInternalError(Exception): pass
+
+TyError = typy.TyError
+TypeFormationError = typy.TypeFormationError
+KindError = typy.KindError
 

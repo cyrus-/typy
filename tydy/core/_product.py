@@ -8,6 +8,7 @@ import typy.util as _util
 import typy.util.astx as astx
 
 import _boolean
+import _errors
 
 #
 # tpl
@@ -54,10 +55,10 @@ class tpl(typy.Type):
 
         n_elts, n_idx = len(elts), len(idx)
         if n_elts < n_idx:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Too few components provided.", e)
         elif n_elts > n_idx:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Too many components provided.", elts[n_idx])
 
         for elt, ty in zip(elts, idx.itervalues()):
@@ -79,10 +80,10 @@ class tpl(typy.Type):
         idx = self.idx
         n_elts, n_idx = len(elts), len(idx)
         if n_elts < n_idx:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Too few components in tpl pattern.", pat)
         elif n_elts > n_idx:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Too many components in tpl pattern.", elts[n_idx])
         
         bindings = _util.odict()
@@ -93,7 +94,7 @@ class tpl(typy.Type):
             bindings.update(elt_bindings)
             n_bindings_new = len(bindings)
             if n_bindings_new != n_bindings + n_elt_bindings:
-                raise typy.TypeError("Duplicate variable in pattern.", pat)
+                raise _errors.TyError("Duplicate variable in pattern.", pat)
             n_bindings = n_bindings_new
         
         return bindings
@@ -122,22 +123,22 @@ class tpl(typy.Type):
         idx = self.idx
         n_keys, n_idx = len(keys), len(idx)
         if n_keys < n_idx:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Too few components provided.", e)
         elif n_keys > n_idx:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Too many components provided.", e)
 
         used_labels = set()
         for key, value in zip(keys, values):
             label = _read_label(key)
             if label in used_labels:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Duplicate label: " + str(label), key)
             try:
                 ty = idx[label]
             except KeyError:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Invalid label: " + str(label), key)
             used_labels.add(label)
             key.label = label
@@ -168,9 +169,9 @@ class tpl(typy.Type):
         idx = self.idx
         n_keys, n_idx = len(keys), len(idx)
         if n_keys < n_idx:
-            raise typy.TypeError("Too few elements in pattern.", pat)
+            raise _errors.TyError("Too few elements in pattern.", pat)
         elif n_keys > n_idx:
-            raise typy.TypeError("Too many elements in pattern.", keys[n_idx])
+            raise _errors.TyError("Too many elements in pattern.", keys[n_idx])
 
         used_labels = set()
         bindings = _util.odict()
@@ -178,20 +179,20 @@ class tpl(typy.Type):
         for key, value in zip(keys, values):
             label = _read_label(key)
             if label in used_labels:
-                raise typy.TypeError("Duplicate label: " + str(label), key)
+                raise _errors.TyError("Duplicate label: " + str(label), key)
             used_labels.add(label)
             key.label = label
 
             try:
                 ty = idx[label]
             except KeyError:
-                raise typy.TypeError("Invalid label: " + str(label), key)
+                raise _errors.TyError("Invalid label: " + str(label), key)
             elt_bindings = ctx.ana_pat(value, ty)
             n_elt_bindings = len(elt_bindings)
             bindings.update(elt_bindings)
             n_bindings_new = len(bindings)
             if n_bindings_new != n_bindings + n_elt_bindings:
-                raise typy.TypeError("Duplicate variable in pattern.", pat)
+                raise _errors.TyError("Duplicate variable in pattern.", pat)
             n_bindings = n_bindings_new
 
         return bindings
@@ -220,11 +221,11 @@ class tpl(typy.Type):
     def ana_Call_constructor(self, ctx, e):
         id = e.func.id
         if id != 'X':
-            raise typy.TypeError("tpl only supports the X constructor")
+            raise _errors.TyError("tpl only supports the X constructor")
         if e.starargs is not None:
-            raise typy.TypeError("No support for starargs", e)
+            raise _errors.TyError("No support for starargs", e)
         if e.kwargs is not None:
-            raise typy.TypeError("No support for kwargs", e)
+            raise _errors.TyError("No support for kwargs", e)
 
         idx = self.idx
         args = e.args
@@ -235,16 +236,16 @@ class tpl(typy.Type):
         n_args, n_keywords = len(args), len(keywords)
         n_elts = n_args + n_keywords
         if n_elts < n_idx:
-            raise typy.TypeError("Too few elements.", e)
+            raise _errors.TyError("Too few elements.", e)
         elif n_elts > n_idx:
-            raise typy.TypeError("Too many elements.", e)
+            raise _errors.TyError("Too many elements.", e)
 
         # process non-keywords
         for i, arg in enumerate(args):
             try:
                 ty = idx[i]
             except KeyError:
-                raise typy.TypeError("No component labeled " + str(i), arg)
+                raise _errors.TyError("No component labeled " + str(i), arg)
             ctx.ana(arg, ty)
 
         # process keywords
@@ -253,7 +254,7 @@ class tpl(typy.Type):
             try:
                 ty = idx[label]
             except KeyError:
-                raise typy.TypeError("No component labeled " + label, label)
+                raise _errors.TyError("No component labeled " + label, label)
             value = keyword.value
             ctx.ana(value, ty)
 
@@ -286,11 +287,11 @@ class tpl(typy.Type):
     def ana_pat_Call_constructor(self, ctx, pat):
         id = pat.func.id
         if id != 'X':
-            raise typy.TypeError("tpl supports only the 'X' constructor", pat.func)
+            raise _errors.TyError("tpl supports only the 'X' constructor", pat.func)
         if pat.starargs is not None:
-            raise typy.TypeError("No support for starargs", pat)
+            raise _errors.TyError("No support for starargs", pat)
         if pat.kwargs is not None:
-            raise typy.TypeError("No support for kwargs", pat)
+            raise _errors.TyError("No support for kwargs", pat)
 
         args = pat.args
         keywords = pat.keywords
@@ -303,13 +304,13 @@ class tpl(typy.Type):
             try:
                 ty = idx[i]
             except KeyError:
-                raise typy.TypeError("Invalid label: " + str(i), arg)
+                raise _errors.TyError("Invalid label: " + str(i), arg)
             elt_bindings = ctx.ana_pat(arg, ty)
             n_elt_bindings = len(elt_bindings)
             bindings.update(elt_bindings)
             n_bindings_new = len(bindings)
             if n_bindings_new != n_bindings + n_elt_bindings:
-                raise typy.TypeError("Duplicate variable in pattern.", arg)
+                raise _errors.TyError("Duplicate variable in pattern.", arg)
             n_bindings = n_bindings_new
 
         for keyword in keywords:
@@ -317,14 +318,14 @@ class tpl(typy.Type):
             try:
                 ty = idx[label]
             except KeyError:
-                raise typy.TypeError("Invalid label: " + label, keyword)
+                raise _errors.TyError("Invalid label: " + label, keyword)
             value = keyword.value
             elt_bindings = ctx.ana_pat(value, ty)
             n_elt_bindings = len(elt_bindings)
             bindings.update(elt_bindings)
             n_bindings_new = len(bindings)
             if n_bindings_new != n_bindings + n_elt_bindings:
-                raise typy.TypeError("Duplicate variable in pattern.", value)
+                raise _errors.TyError("Duplicate variable in pattern.", value)
             n_bindings = n_bindings_new
 
         return bindings
@@ -367,7 +368,7 @@ class tpl(typy.Type):
         try:
             ty = idx[attr]
         except KeyError:
-            raise typy.TypeError("Cannot project component labeled " + attr, e)
+            raise _errors.TyError("Cannot project component labeled " + attr, e)
         return ty 
 
     def translate_Attribute(self, ctx, e):
@@ -381,13 +382,13 @@ class tpl(typy.Type):
     def syn_Subscript(self, ctx, e):
         slice_ = e.slice
         if not isinstance(slice_, ast.Index):
-            raise typy.TypeError("Must provide a single label.", slice_)
+            raise _errors.TyError("Must provide a single label.", slice_)
         value = slice_.value
         label = _read_label(value)
         try:
             ty = self.idx[label]
         except KeyError:
-            raise typy.TypeError("Cannot project component labeled " + str(label), e)
+            raise _errors.TyError("Cannot project component labeled " + str(label), e)
         value.label = label
         return ty
 
@@ -406,9 +407,9 @@ class tpl(typy.Type):
         for op in ops:
             if isinstance(op, (ast.Eq, ast.NotEq)):
                 if not len(self.idx) == 0:
-                    raise typy.TypeError("Can only compare unit values for equality.", e)
+                    raise _errors.TyError("Can only compare unit values for equality.", e)
             elif not isinstance(op, (ast.Is, ast.IsNot)):
-                raise typy.TypeError("Invalid comparison operator.", op)
+                raise _errors.TyError("Invalid comparison operator.", op)
 
         for e_ in _util.tpl_cons(left, comparators):
             if hasattr(e_, "match"): 
@@ -498,22 +499,22 @@ def _read_label(key):
         if isinstance(n, (int, long)) and n >= 0:
             return n
         else:
-            raise typy.TypeError("Invalid numeric label.", key)
+            raise _errors.TyError("Invalid numeric label.", key)
     elif isinstance(key, ast.Str):
         s = key.s
         if s != "":
             return s
         else:
-            raise typy.TypeError("Invalid string label.", key)
+            raise _errors.TyError("Invalid string label.", key)
     else:
-        raise typy.TypeError("Invalid label", key)
+        raise _errors.TyError("Invalid label", key)
 
 def _syn_idx_Dict(cls, ctx, keys, values):
     used_labels = set()
     for key, value in zip(keys, values):
         label = _read_label(key)
         if label in used_labels:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Duplicate label: " + str(label), key)
         used_labels.add(label)
         if typy._is_intro_form(value):
@@ -526,11 +527,11 @@ def _syn_idx_Dict(cls, ctx, keys, values):
 def _syn_idx_Call_constructor(ctx, e):
     id = e.func.id
     if id != 'X':
-        raise typy.TypeError("tpl only supports the X constructor", e.func)
+        raise _errors.TyError("tpl only supports the X constructor", e.func)
     if e.starargs is not None:
-        raise typy.TypeError("No support for starargs", e)
+        raise _errors.TyError("No support for starargs", e)
     if e.kwargs is not None:
-        raise typy.TypeError("No support for kwargs", e)
+        raise _errors.TyError("No support for kwargs", e)
 
     args = e.args
     keywords = e.keywords

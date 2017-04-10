@@ -5,6 +5,8 @@ import typy
 import typy.util as _util
 import typy.util.astx as astx
 
+import _errors
+
 class boolean_(typy.Type):
     @classmethod
     def init_idx(cls, idx):
@@ -25,7 +27,7 @@ class boolean_(typy.Type):
     def ana_Name_constructor(self, ctx, e):
         id = e.id
         if id != "True" and id != "False":
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Must introduce a value of boolean type with either True or False.",
                 e)
 
@@ -33,7 +35,7 @@ class boolean_(typy.Type):
     def syn_idx_Name_constructor(cls, ctx, e, inc_idx):
         id = e.id
         if id != "True" and id != "False":
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Must introduce a value of boolean type with either True or False.",
                 e)
         return ()
@@ -45,7 +47,7 @@ class boolean_(typy.Type):
         if isinstance(e.op, ast.Not):
             return self
         else:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 """Type bool does not support this unary operator.""",
                 e)
 
@@ -58,7 +60,7 @@ class boolean_(typy.Type):
         left, ops, comparators = e.left, e.ops, e.comparators
         for op in ops:
             if not isinstance(op, (ast.Eq, ast.NotEq, ast.Is, ast.IsNot)):
-                raise typy.TypeError("Type bool does not support this operator.", op)
+                raise _errors.TyError("Type bool does not support this operator.", op)
         for e_ in _util.tpl_cons(left, comparators):
             if hasattr(e_, 'match'): 
                 continue # already synthesized
@@ -89,7 +91,7 @@ class boolean_(typy.Type):
     def ana_pat_Name_constructor(self, ctx, pat):
         id = pat.id
         if id != "True" and id != "False":
-            raise typy.TypeError("Boolean values only match 'True' and 'False'")
+            raise _errors.TyError("Boolean values only match 'True' and 'False'")
         return typy.odict()
 
     def translate_pat_Name_constructor(self, ctx, pat, scrutinee):

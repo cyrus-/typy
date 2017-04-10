@@ -7,6 +7,7 @@ import typy.util.astx as astx
 
 import _boolean
 import _fn
+import _errors
 
 # 
 # num
@@ -31,7 +32,7 @@ class num_(typy.Type):
     def ana_Num(self, ctx, e):
         n = e.n
         if not isinstance(n, (int, long)):
-            raise typy.TypeError("Expression is not an int or long literal.", e)
+            raise _errors.TyError("Expression is not an int or long literal.", e)
 
     @classmethod
     def syn_idx_Num(cls, ctx, e, inc_idx):
@@ -39,7 +40,7 @@ class num_(typy.Type):
         if isinstance(n, (int, long)):
             return ()
         else:
-            raise typy.TypeError("Expression is not an int or long literal.", e)
+            raise _errors.TyError("Expression is not an int or long literal.", e)
 
     def translate_Num(self, ctx, e):
         return astx.copy_node(e)
@@ -47,7 +48,7 @@ class num_(typy.Type):
     def ana_pat_Num(self, ctx, pat):
         n = pat.n 
         if not isinstance(n, (int, long)):
-            raise typy.TypeError("Pattern for type 'num' must be int or long.", pat)
+            raise _errors.TyError("Pattern for type 'num' must be int or long.", pat)
         return _util.odict()
 
     def translate_pat_Num(self, ctx, pat, scrutinee_trans):
@@ -63,7 +64,7 @@ class num_(typy.Type):
         if not isinstance(e.op, ast.Not):
             return self
         else:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Invalid unary operator 'not' for operand of type num.", e)
 
     def translate_UnaryOp(self, ctx, e):
@@ -90,7 +91,7 @@ class num_(typy.Type):
         left, ops, comparators = e.left, e.ops, e.comparators
         for op in ops:
             if isinstance(op, (ast.In, ast.NotIn)):
-                raise typy.TypeError("Type num does not support this operator.", op)
+                raise _errors.TyError("Type num does not support this operator.", op)
         for e_ in _util.tpl_cons(left, comparators):
             if hasattr(e_, 'match'):
                 continue # already synthesized
@@ -112,7 +113,7 @@ class num_(typy.Type):
         elif attr == 'c':
             return cplx
         else:
-            raise typy.TypeError("Invalid attribute.", e)
+            raise _errors.TyError("Invalid attribute.", e)
 
     def translate_Attribute(self, ctx, e):
         value, attr = e.value, e.attr
@@ -149,13 +150,13 @@ class ieee_(typy.Type):
 
     def ana_Num(self, ctx, e):
         if not isinstance(e.n, (int, long, float)):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "cplx literal cannot be used to introduce value of type 'ieee'.", e)
 
     @classmethod
     def syn_idx_Num(cls, ctx, e, inc_idx):
         if not isinstance(e.n, (int, long, float)):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "cplx literal cannot be used to introduce value of type 'ieee'.", e)
         return ()
 
@@ -166,7 +167,7 @@ class ieee_(typy.Type):
 
     def ana_pat_Num(self, ctx, pat):
         if not isinstance(pat.n, (int, long, float)):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Complex literal cannot be used as a pattern for type 'ieee'.", pat)
         return _util.odict()
     
@@ -185,7 +186,7 @@ class ieee_(typy.Type):
         if id == "NaN" or id == "Inf":
             return
         else:
-            raise typy.TypeError("Invalid constructor name: " + id, e)
+            raise _errors.TyError("Invalid constructor name: " + id, e)
 
     @classmethod
     def syn_idx_Name_constructor(cls, ctx, e, inc_idx):
@@ -193,7 +194,7 @@ class ieee_(typy.Type):
         if id == "NaN" or id == "Inf":
             return ()
         else:
-            raise typy.TypeError("Invalid constructor name: " + id, e)
+            raise _errors.TyError("Invalid constructor name: " + id, e)
 
     def translate_Name_constructor(self, ctx, e):
         id = e.id
@@ -205,7 +206,7 @@ class ieee_(typy.Type):
         if id == "NaN" or id == "Inf":
             return _util.odict()
         else:
-            raise typy.TypeError("Invalid constructor name: " + id, pat)
+            raise _errors.TyError("Invalid constructor name: " + id, pat)
 
     def translate_pat_Name_constructor(cls, ctx, pat, scrutinee_trans):
         id = pat.id
@@ -226,17 +227,17 @@ class ieee_(typy.Type):
     def ana_Unary_Name_constructor(self, ctx, e):
         id = e.operand.id
         if id != "Inf":
-            raise typy.TypeError("Invalid ieee literal.", e)
+            raise _errors.TyError("Invalid ieee literal.", e)
         if not isinstance(e.op, (ast.UAdd, ast.USub)):
-            raise typy.TypeError("Invalid unary operator on ieee literal.", e)
+            raise _errors.TyError("Invalid unary operator on ieee literal.", e)
 
     @classmethod
     def syn_idx_Unary_Name_constructor(cls, ctx, e, inc_idx):
         id = e.operand.id
         if id != "Inf":
-            raise typy.TypeError("Invalid ieee literal.", e)
+            raise _errors.TyError("Invalid ieee literal.", e)
         if not isinstance(e.op, (ast.UAdd, ast.USub)):
-            raise typy.TypeError("Invalid unary operator on ieee literal.", e)
+            raise _errors.TyError("Invalid unary operator on ieee literal.", e)
         return ()
 
     def translate_Unary_Name_constructor(self, ctx, e):
@@ -249,9 +250,9 @@ class ieee_(typy.Type):
     def ana_pat_Unary_Name_constructor(self, ctx, pat):
         id = pat.operand.id
         if id != "Inf":
-            raise typy.TypeError("Invalid ieee literal pattern.", pat)
+            raise _errors.TyError("Invalid ieee literal pattern.", pat)
         if not isinstance(pat.op, (ast.UAdd, ast.USub)):
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Invalid unary operator on ieee literal pattern.", pat)
         return _util.odict()
 
@@ -270,7 +271,7 @@ class ieee_(typy.Type):
 
     def syn_UnaryOp(self, ctx, e):
         if isinstance(e.op, (ast.Not, ast.Invert)):
-            raise typy.TypeError("Invalid unary operator for operand of type ieee.", e)
+            raise _errors.TyError("Invalid unary operator for operand of type ieee.", e)
         else:
             return self
             
@@ -281,7 +282,7 @@ class ieee_(typy.Type):
 
     def syn_BinOp(self, ctx, e):
         if isinstance(e.op, (ast.LShift, ast.RShift, ast.BitOr, ast.BitXor, ast.BitAnd)):
-            raise typy.TypeError("Cannot use bitwise operators on ieee values.", e)
+            raise _errors.TyError("Cannot use bitwise operators on ieee values.", e)
         ctx.ana(e.right, self)
         return self
 
@@ -295,7 +296,7 @@ class ieee_(typy.Type):
         left, ops, comparators = e.left, e.ops, e.comparators
         for op in ops:
             if isinstance(op, (ast.In, ast.NotIn)):
-                raise typy.TypeError("Type ieee does not support this operator.", op)
+                raise _errors.TyError("Type ieee does not support this operator.", op)
         for e_ in _util.tpl_cons(left, comparators):
             if hasattr(e_, 'match'): 
                 continue # already synthesized
@@ -314,7 +315,7 @@ class ieee_(typy.Type):
         if e.attr == 'c':
             return cplx
         else:
-            raise typy.TypeError("Invalid attribute.", e)
+            raise _errors.TyError("Invalid attribute.", e)
 
     def translate_Attribute(self, ctx, e):
         value = e.value
@@ -377,7 +378,7 @@ class cplx_(typy.Type):
     def _process_Tuple(cls, ctx, e):
         elts = e.elts
         if len(elts) != 2:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Using a tuple to introduce a value of type cplx requires two elements.",
                 e)
         rl, im = elts[0], elts[1]
@@ -387,13 +388,13 @@ class cplx_(typy.Type):
         else:
             rl_ty = ctx.syn(rl)
             if rl_ty != num and rl_ty != ieee:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Real component must be be num or ieee.", rl)
 
         if not isinstance(im, ast.Num):
             im_ty = ctx.syn(im)
             if im_ty != num and im_ty != ieee:
-                raise typy.TypeError(
+                raise _errors.TyError(
                     "Imaginary component must be a complex literal, or an expressin of type 'num' or 'ieee'.", # noqa
                     im)
 
@@ -429,7 +430,7 @@ class cplx_(typy.Type):
     def ana_pat_Tuple(self, ctx, pat):
         elts = pat.elts
         if len(elts) != 2:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Using a tuple pattern for a value of type cplx requires two elements.",
                 pat)
         rl, im = elts[0], elts[1]
@@ -441,7 +442,7 @@ class cplx_(typy.Type):
         bindings.update(im_bindings)
         n_bindings = len(bindings)
         if n_bindings != n_rl_bindings + n_im_bindings:
-            raise typy.TypeError("Duplicated variables in pattern.", pat)
+            raise _errors.TyError("Duplicated variables in pattern.", pat)
         return bindings
     
     def translate_pat_Tuple(self, ctx, pat, scrutinee_trans):
@@ -463,7 +464,7 @@ class cplx_(typy.Type):
         if not isinstance(e.op, (ast.Not, ast.Invert)):
             return self
         else:
-            raise typy.TypeError("Invalid unary operator for operand of type cplx.", e)
+            raise _errors.TyError("Invalid unary operator for operand of type cplx.", e)
 
     def translate_UnaryOp(self, ctx, e):
         translation = astx.copy_node(e)
@@ -472,9 +473,9 @@ class cplx_(typy.Type):
 
     def syn_BinOp(self, ctx, e):
         if isinstance(e.op, (ast.LShift, ast.RShift, ast.BitOr, ast.BitXor, ast.BitAnd)):
-            raise typy.TypeError("Cannot use bitwise operators on cplx values.", e)
+            raise _errors.TyError("Cannot use bitwise operators on cplx values.", e)
         if isinstance(e.op, ast.Mod):
-            raise typy.TypeError("Cannot take the modulus of a complex number.", e)
+            raise _errors.TyError("Cannot take the modulus of a complex number.", e)
 
         right = e.right
         ctx.ana(right, self)
@@ -491,9 +492,9 @@ class cplx_(typy.Type):
         left, ops, comparators = e.left, e.ops, e.comparators
         for op in ops:
             if isinstance(op, (ast.Lt, ast.LtE, ast.Gt, ast.GtE)):
-                raise typy.TypeError("No ordering relation on complex numbers.", e)
+                raise _errors.TyError("No ordering relation on complex numbers.", e)
             elif isinstance(op, (ast.In, ast.NotIn)):
-                raise typy.TypeError("Type complex does not support this operator.", op)
+                raise _errors.TyError("Type complex does not support this operator.", op)
         for e_ in _util.tpl_cons(left, comparators):
             if hasattr(e_, 'match'): 
                 continue # already synthesized
@@ -515,7 +516,7 @@ class cplx_(typy.Type):
         elif attr == "conjugate":
             return _fn.fn[(), self]
         else:
-            raise typy.TypeError("Invalid attribute: " + attr, e)
+            raise _errors.TyError("Invalid attribute: " + attr, e)
 
     def translate_Attribute(self, ctx, e):
         translation = astx.copy_node(e)

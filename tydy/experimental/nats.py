@@ -14,7 +14,7 @@ def Nats():
     
     @interface
     def INat():
-        t      [type]
+        t      [:: Type]
         zero   [: t]
         succ   [: t > t]
         case   [: t * case_rules(t, +a) > +a]

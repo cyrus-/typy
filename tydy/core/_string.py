@@ -7,6 +7,7 @@ import typy.util.astx as astx
 
 import _boolean
 import _numeric
+import _errors
 
 class string_(typy.Type):
     @classmethod
@@ -52,7 +53,7 @@ class string_(typy.Type):
             ctx.ana(e.right, self)
             return self
         else:
-            raise typy.TypeError("Invalid binary operator on strings.", e)
+            raise _errors.TyError("Invalid binary operator on strings.", e)
 
     def translate_BinOp(self, ctx, e):
         translation = astx.copy_node(e)
@@ -64,7 +65,7 @@ class string_(typy.Type):
         left, ops, comparators = e.left, e.ops, e.comparators
         for op in ops:
             if not isinstance(op, (ast.Eq, ast.NotEq, ast.Is, ast.IsNot, ast.In, ast.NotIn)):
-                raise typy.TypeError("Invalid comparison operator on strings.", e)
+                raise _errors.TyError("Invalid comparison operator on strings.", e)
         for e_ in _util.tpl_cons(left, comparators):
             if hasattr(e_, 'match'): 
                 continue # already synthesized
@@ -82,9 +83,9 @@ class string_(typy.Type):
     def syn_Subscript(self, ctx, e):
         slice_ = e.slice 
         if isinstance(slice_, ast.Ellipsis):
-            raise typy.TypeError("stringing slice cannot be an Ellipsis.", e)
+            raise _errors.TyError("stringing slice cannot be an Ellipsis.", e)
         elif isinstance(slice_, ast.ExtSlice):
-            raise typy.TypeError("stringing slice can only have one dimension.", e)
+            raise _errors.TyError("stringing slice can only have one dimension.", e)
         elif isinstance(slice_, ast.Index):
             ctx.ana(slice_.value, _numeric.num)
         else: # if isinstance(slice_, ast.Slice):

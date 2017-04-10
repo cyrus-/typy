@@ -7,6 +7,7 @@ import typy
 import typy.util as _util
 
 import _product
+import _errors
 
 # 
 # finsum
@@ -74,10 +75,10 @@ class finsum(typy.Type):
         try:
             ty = idx[lbl]
         except KeyError:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Label not found in finsum: " + lbl, e)
         if ty != _product.unit:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Label has non-unit type but no payload was applied: " + lbl, e)
 
     def ana_pat_Name_constructor(self, ctx, pat):
@@ -87,10 +88,10 @@ class finsum(typy.Type):
         try:
             ty = idx[lbl]
         except KeyError:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Label not found in finsum: " + lbl, pat)
         if ty != _product.unit:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Label has non-unit type but no payload pattern was applied: " + lbl, pat)
         return _util.odict()
 
@@ -108,11 +109,11 @@ class finsum(typy.Type):
     
     def ana_Call_constructor(self, ctx, e):
         if e.starargs is not None:
-            raise typy.TypeError("No support for starargs", e)
+            raise _errors.TyError("No support for starargs", e)
         if e.kwargs is not None:
-            raise typy.TypeError("No support for kwargs", e)
+            raise _errors.TyError("No support for kwargs", e)
         if len(e.keywords) != 0:
-            raise typy.TypeError("No support for keyword arguments.", e)
+            raise _errors.TyError("No support for keyword arguments.", e)
 
         idx = self.idx
         lbl = e.func.id
@@ -120,25 +121,25 @@ class finsum(typy.Type):
         try:
             ty = idx[lbl]
         except KeyError:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Label not found in finsum: " + lbl, e)
 
         # TODO: special case tpl
 
         args = e.args
         if len(args) != 1:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Must provide a single argument.", e)
         arg = args[0]
         ctx.ana(arg, ty)
 
     def ana_pat_Call_constructor(self, ctx, pat):
         if pat.starargs is not None:
-            raise typy.TypeError("No support for starargs", pat)
+            raise _errors.TyError("No support for starargs", pat)
         if pat.kwargs is not None:
-            raise typy.TypeError("No support for kwargs", pat)
+            raise _errors.TyError("No support for kwargs", pat)
         if len(pat.keywords) != 0:
-            raise typy.TypeError("No support for keyword arguments.", pat)
+            raise _errors.TyError("No support for keyword arguments.", pat)
 
         idx = self.idx
         lbl = pat.func.id
@@ -146,14 +147,14 @@ class finsum(typy.Type):
         try:
             ty = idx[lbl]
         except KeyError:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Label not found in finsum: " + lbl, pat)
         
         # TODO: special case tpl
 
         args = pat.args
         if len(args) != 1:
-            raise typy.TypeError(
+            raise _errors.TyError(
                 "Must provide a single argument.", pat)
         arg = args[0]
         return ctx.ana_pat(arg, ty)
