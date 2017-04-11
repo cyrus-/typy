@@ -6,15 +6,15 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 
   
 ---
-Typed functional programming is the practice of building programs up from universal mathematical primitives like tuples, finite variants and functions (rather than fundamentally _ad hoc_, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.
+Simply typed functional programming is the practice of building programs up from simple mathematical primitives like tuples, finite variants and functions (rather than fundamentally _ad hoc_, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.
 
-Unfortunately, there's a catch-22: popular programming languages like Python don't yet have great support for typed functional programming while typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
+Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming. Conversely, typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support or social inertia. Consider these totally-not-made-up quotes:
 
-> "You'll never get me to give up my obscure Python statistics packages!"
+   > "You'll never get me to give up my obscure Python statistics packages!"
 
-> "Mathematical elegance is nice and all, but my 3D-printed toaster has Python bindings."
+   > "Mathematical elegance is nice and all, but my 3D-printed toaster has Python bindings."
 
-`tydy` aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library.
+`tydy` aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library. Install `tydy` by running `pip install tydy`.
 
 Hello, World!
 -------------
