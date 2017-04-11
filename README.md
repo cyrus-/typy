@@ -5,7 +5,7 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 ![tydy: simply typed functional programming inside Python](https://github.com/cyrus-/tydy/raw/master/tydy-logo-goudy.png)
   
 ---
-Simply typed functional programming is the practice of building programs up from traditional mathematical primitives like tuples, finite variants and functions (rather than fundamentally _ad hoc_, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.
+Simply typed functional programming is the practice of building programs up from traditional mathematical primitives like tuples, finite variants and functions (rather than _ad hoc_, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.
 
 Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming. Conversely, typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support or social inertia. Consider these totally-not-made-up quotes:
 
