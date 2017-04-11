@@ -1,4 +1,4 @@
-NOTE: tydy is still under development and this repository is not yet intended for public consumption in any way. Most of what's written below is still aspirational. See this paper for more details on what I'm working on: https://github.com/cyrus-/papers/blob/master/typy-2016/typy-2016.pdf.
+NOTE: tydy is still under development and this repository is not yet intended for public consumption in any way.
 
 ---
 
@@ -6,7 +6,7 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 
   
 ---
-Typed functional programming is the practice of structuring your code using simple mathematical primitives like tuples, finite variants and functions (rather than fundamentally complex primitives like mutable objects and nullable references.) The promised benefits are substantial.
+Typed functional programming is a method of structuring programs in terms of simple mathematical primitives like tuples, finite variants and functions (rather than fundamentally _ad hoc_ primitives like mutable objects and nullable references.) The promised benefits are substantial.
 
 Unfortunately, there's a catch-22: popular programming languages like Python don't yet have great support for typed functional programming while typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support and social inertia. Consider these totally-not-made-up quotes:
 
