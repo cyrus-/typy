@@ -3,7 +3,6 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 ---
 
 ![tydy: simply typed functional programming inside Python](https://github.com/cyrus-/tydy/raw/master/tydy-logo-goudy.png)
-
   
 ---
 Simply typed functional programming is the practice of building programs up from simple mathematical primitives like tuples, finite variants and functions (rather than fundamentally _ad hoc_, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.
@@ -14,7 +13,7 @@ Unfortunately, popular programming languages like Python don't yet have great su
 
    > "Mathematical elegance is nice and all, but my 3D-printed toaster has Python bindings."
 
-`tydy` aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library. Install `tydy` by running `pip install tydy`.
+`tydy` aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library. You can install `tydy` by running `pip install tydy`.
 
 Hello, World!
 -------------
@@ -26,7 +25,7 @@ print(hello("World"))
 ```
 Notice that the function `hello` does not need to explicitly `return` -- like other functional languages, `tydy` is *expression-oriented*. The return type, `string`, is inferred. `tydy` allows side effects, like `print`ing, anywhere (i.e. it can be considered an impure functional language in the ML tradition.)
 
-`tydy` code lives inside `tydy` components:
+`tydy` code must appear inside a `tydy` component:
 ```python 
 import tydy
 
@@ -36,11 +35,7 @@ def Hello():
         "Hello, " + x + "!"
     print(hello("World"))
 ```
-The component body is parsed by Python, then typechecked and compiled (to Python) by `tydy`. This needs to happen only once, even if some other component calls `hello` many times.
-
-Installation
-------------
-To install `tydy`, you can just `pip install tydy`. Then, paste the code above into a file `hello.py` and run `python hello.py`. Currently, `tydy` requires Python 3.5+ (but the plan is to support Python 2.7+ in the near future.)
+The component body is parsed by Python, then typechecked and translated to Python by `tydy` before it is evaluated. This needs to happen only once, even if some other component calls `hello` many times.
 
 Language Features
 -----------------
@@ -56,13 +51,16 @@ The manual gives the full details. If you're already familiar with a typed funct
 
 Let's make this happen.
 -----------------------
-I think `tydy` could bring statically typed functional programming to the masses. Help make it happen:
+I think `tydy` could bring typed functional programming to a massive new audience. Here's how you can help make it happen:
 * star this repository, share, join our gitter
 * write a tydy library (ideas and progress)
-* contribute to the patreon campaign, individually or as an organizational sponsor
-* hire me to give a training seminar, provide support or consult
 * give a talk about tydy to your local Python users group, your academic department, or to a conference (example slides)
 * join the tydy team -- there are lots of really interesting projects for anyone interested in designing and implementing programming languages and tools. 
+
+It would really help if there was money flowing into the project as well. Here are some ways you can help:
+* contribute individually to the patreon campaign 
+* become an organizational sponsor of tydy, and enjoy prominent placement on the website and README
+* hire me to give a training seminar, provide support or consult
 
 License
 -------
