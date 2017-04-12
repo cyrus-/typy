@@ -1,0 +1,87 @@
+{
+  "name": "cyrus-/tydy",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "tydy",
+  "branch": "master",
+  "style": {
+    "name": "Swiss",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/SwissHeader",
+      "article": "article/SwissArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+    "heading": {
+      "fontWeight": 700,
+      "letterSpacing": "-0.01em"
+    },
+    "layout": {
+      "fluid": true
+    },
+    "colors": {
+      "text": "#000",
+      "background": "#fff",
+      "primary": "#05a",
+      "secondary": "#444",
+      "highlight": "#f30",
+      "border": "#ccc",
+      "muted": "#eee"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "http://www.tydy.org/",
+          "text": "Home"
+        },
+        {
+          "href": "https://github.com/cyrus-/tydy",
+          "text": "GitHub"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "tydy",
+      "subhead": "Simply typed functional programming inside Python.",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "tydy: Simply typed functional programming inside Python.",
+          "url": "http://www.tydy.org/"
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "cyrus-",
+          "repo": "tydy"
+        }
+      ]
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "<p>NOTE: tydy is still under development and this repository is not yet intended for public consumption in any way.</p>\n<hr>\n<p><img src=\"https://github.com/cyrus-/tydy/raw/master/tydy-logo-goudy.png\"></p>\n<hr>\n<p>Simply typed functional programming is the practice of building programs up from traditional mathematical primitives like tuples, finite variants and functions (rather than <em>ad hoc</em>, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.</p>\n<p>Unfortunately, popular programming languages like Python don&apos;t yet have great support for typed functional programming. Conversely, typed functional programming languages like OCaml and Haskell don&apos;t yet have nearly as much library support or social inertia. Consider these totally-not-made-up quotes:</p>\n<blockquote>\n<p>&quot;You&apos;ll never get me to give up my obscure Python statistics packages!&quot;</p>\n<p>&quot;Mathematical elegance is nice and all, but my 3D-printed toaster has Python bindings.&quot;</p>\n</blockquote>\n<p><code>tydy</code> aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library. You can install <code>tydy</code> by running <code>pip install tydy</code>.</p>\n<h2>Hello, World!</h2>\n<p>Here is the heart of a <code>tydy</code>&apos;d up functional &quot;Hello, World!&quot;:</p>\n<pre><span class=\"hljs-function\"><span class=\"hljs-keyword\">def</span> <span class=\"hljs-title\">hello</span><span class=\"hljs-params\">(x : string)</span>:</span> \n    <span class=\"hljs-string\">&quot;Hello, &quot;</span> + x + <span class=\"hljs-string\">&quot;!&quot;</span>\nprint(hello(<span class=\"hljs-string\">&quot;World&quot;</span>))</pre><p>Notice that the function <code>hello</code> does not need to explicitly <code>return</code> -- like other functional languages, <code>tydy</code> is <em>expression-oriented</em>. The return type, <code>string</code>, is inferred. <code>tydy</code> allows side effects, like <code>print</code>ing, anywhere (i.e. it can be considered an impure functional language in the ML tradition.)</p>\n<p><code>tydy</code> code must appear inside a <code>tydy</code> component:</p>\n<pre><span class=\"hljs-keyword\">import</span> tydy\n\n<span class=\"hljs-meta\">@tydy.component</span>\n<span class=\"hljs-function\"><span class=\"hljs-keyword\">def</span> <span class=\"hljs-title\">Hello</span><span class=\"hljs-params\">()</span>:</span>\n    <span class=\"hljs-function\"><span class=\"hljs-keyword\">def</span> <span class=\"hljs-title\">hello</span><span class=\"hljs-params\">(x : string)</span>:</span> \n        <span class=\"hljs-string\">&quot;Hello, &quot;</span> + x + <span class=\"hljs-string\">&quot;!&quot;</span>\n    print(hello(<span class=\"hljs-string\">&quot;World&quot;</span>))</pre><p>The component body is parsed by Python, then typechecked and translated to Python by <code>tydy</code> before it is evaluated. This needs to happen only once, even if some other component calls <code>hello</code> many times.</p>\n<h2>Language Features</h2>\n<p>Simple functions like <code>hello</code> are, of course, just the beginning. <code>tydy</code> has all the typed functional essentials... </p>\n<ul>\n<li>algebraic datatypes (tuples, labeled tuples and labeled sums)</li>\n<li>pattern matching</li>\n<li>parametric polymorphism</li>\n<li>local type inference</li>\n</ul>\n<p>...plus, fast and clean two-way interoperability with Python. </p>\n<p>The manual gives the full details. If you&apos;re already familiar with a typed functional language, you might be interested in a side-by-side comparison with Standard ML and OCaml.</p>\n<h2>Let&apos;s make this happen.</h2>\n<p>I think <code>tydy</code> could bring typed functional programming to a massive new audience. Here&apos;s how you can help make it happen:</p>\n<ul>\n<li>star this repository, share, join our gitter</li>\n<li>write a tydy library (ideas and progress)</li>\n<li>give a talk about tydy to your local Python users group, your academic department, or to a conference (example slides)</li>\n<li>join the tydy team -- there are lots of really interesting projects for anyone interested in designing and implementing programming languages and tools. </li>\n</ul>\n<p>It would really help if there was money flowing into the project as well. Here are some ways you can help:</p>\n<ul>\n<li>contribute individually to the patreon campaign </li>\n<li>become an organizational sponsor of tydy, and enjoy prominent placement on the website and README</li>\n<li>hire me to give a training seminar, provide support or consult</li>\n</ul>\n<h2>License</h2>\n<p><code>tydy</code> is released under the permissive MIT License, requiring only attribution in derivative works. See LICENSE for full terms.</p>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/cyrus-/tydy",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/cyrus-",
+          "text": "cyrus-"
+        }
+      ]
+    }
+  ]
+}
