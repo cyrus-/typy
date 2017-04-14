@@ -5,15 +5,17 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 ![tydy: simply typed functional programming inside Python](https://github.com/cyrus-/tydy/raw/master/tydy-logo-goudy.png)
   
 ---
-Simply typed functional programming is the practice of building programs up from traditional mathematical primitives like tuples, finite variants and functions (rather than _ad hoc_, machine-oriented primitives like mutable objects and nullable references.) The promised benefits are substantial.
+Typed functional programming is a programming paradigm rooted in the mathematical and logical tradition. Expressions are built up from simple, universal primitives like tuples, finite variants and functions, and abstraction is mediated by types.
 
-Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming. Conversely, typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support or social inertia. Consider these totally-not-made-up quotes:
+I think that typed functional programming is ready to play a major role in the future of computing. Unfortunately, popular programming languages like Python don't yet have great support for typed functional programming. Conversely, typed functional programming languages like OCaml and Haskell don't yet have nearly as much library support or social inertia. Consider these totally-not-made-up quotes:
 
    > "You'll never get me to give up my obscure Python statistics packages!"
+   
+   > "Mathematical elegance is nice and all, but my 3D-printed toaster only has Python bindings."
+   
+   > "The rest of my research group uses Python, and we need to be able to interface with each other's code!"
 
-   > "Mathematical elegance is nice and all, but my 3D-printed toaster has Python bindings."
-
-`tydy` aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library. You can install `tydy` by running `pip install tydy`.
+`tydy` (pronounced "tidy", but easier to search for) aims to address this problem by embedding a typed functional programming language cleanly into Python, as a library. You can install `tydy` by running `pip install tydy`.
 
 Hello, World!
 -------------
