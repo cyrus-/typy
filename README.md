@@ -7,7 +7,7 @@ NOTE: tydy is still under development and this repository is not yet intended fo
 ---
 Typed functional programming is a programming paradigm rooted in mathematical practice. The primitive data structures are simple and universal -- tuples, finite variants and functions -- and types mediate abstraction.
 
-Many of us in the language design community are convinced that typed FP is conceptually ready for mainstream adoption. Unfortunately, mainstream programming languages like Python have been slow to natively support the paradigm. Languages like OCaml and Haskell do support typed FP quite well, but they remain far behind in terms of library support and social inertia. These are significant factors. Consider the following totally-not-made-up quotes:
+Many of us in the language design community are convinced that typed FP is conceptually ready for mainstream adoption. Unfortunately, mainstream programming languages like Python have been slow to natively support the paradigm. Languages like OCaml and Haskell do support typed FP quite well, but they remain far behind in terms of library support and social inertia. These are important factors. Consider the following totally-not-made-up quotes:
 
    > "You'll never get me to give up or rewrite my obscure Python statistics packages!"
    
