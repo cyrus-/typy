@@ -1,9 +1,16 @@
-NOTE: tydy is still under development and this repository is not yet intended for public consumption in any way.
+NOTE: Tidy is still under development and this repository is not yet intended for public consumption in any way.
 
 ---
-Typed functional programming is a programming paradigm rooted in the mathematical tradition. The primitive data structures are simple and immutable -- tuples, finite variants and functions, primarily -- and types statically mediate abstraction.
 
-Many of us in the language design community are convinced that typed FP is, in principle, ready for mainstream adoption. Unfortunately, mainstream programming languages like Python have been slow to support the paradigm. Languages like OCaml and Haskell do support typed FP quite well, but they remain far behind in terms of library support and social inertia. These things turn out to be pretty important in practice. Consider the following totally-not-made-up quotes:
+Functional programming is a programming paradigm that builds directly on the concepts that you learn in arithmetic and algebra classes. A program is a mathematical expression, and running the program corresponds to the process of simplifying that expression to a value. Variables stand for unknown values. Functions map between values.
+
+In high school, we aren't exposed to many different types of values -- mostly numbers and functions over numbers. In mathematics and programming, there are (infinitely) many more types of values, e.g. pairs of numbers, or trees with numbers at the leaves, or lists of such trees, or functions over lists of such trees. 
+
+Type systems are logics that allow you to derive a type for an expression given the types of the variables that appear within it. For example, assuming `x` is a number and `y` is a number, we can derive that `(x, x + y)` is a pair of numbers. Many experienced mathematicians and programmers rely on type systems to help to lower the cognitive cost of working with large mathematical expressions a.k.a. functional programs. We call this practice **typed functional programming**.
+
+(something about side effects / memory / imperative programming)
+
+Many of us in the language design community are convinced that typed FP is a practical paradigm. Unfortunately, mainstream programming languages like Python have been slow to support the paradigm. Languages like OCaml and Haskell do support typed FP quite well, but they remain far behind in terms of library support and social inertia. These things turn out to be pretty important in practice. Consider the following totally-not-made-up quotes:
 
    > "You'll never get me to give up or rewrite my obscure Python statistics packages!"
    
