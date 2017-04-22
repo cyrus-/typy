@@ -8,7 +8,7 @@ Typed functional programming is on the rise, but for many Python programmers it 
 
    > "I'm not about to spend months rewriting all of these Python statistics routines!"
    
-   > "Mathematical elegance seems nice and all, but my 3D-printed e-toaster only has Python bindings."
+   > "Mathematical elegance seems nice and all, but my 3D-printed e-toaster has great Python bindings."
    
    > "The rest of my research group uses Python, and we need to be able to interface with each other's code cleanly!"
 
