@@ -10,7 +10,7 @@ Typed functional programming is on the rise, but for many Python programmers it 
    
    > "Mathematical elegance seems nice and all, but my 3D-printed e-toaster has great Python bindings."
    
-   > "The rest of my research group uses Python, and we need to be able to interface with each other's code cleanly!"
+   > "The rest of my research group uses Python, and we need to be able to interface with each other's code cleanly."
 
 Tidy aims to address these concerns by embedding a typed functional programming language cleanly into Python, as a library. You can install Tidy by running `pip install tidy` today.
 
