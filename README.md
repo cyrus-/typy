@@ -6,13 +6,13 @@ Tidy
 ----
 Typed functional programming is on the rise, but for many Python programmers it isn't practical to switch outright to a typed functional language like OCaml or Haskell. Consider the following totally-not-made-up quotes:
 
-   > "You'll never get me to give up all of these established Python statistics packages!"
+   > "Ha, and rewrite all of these Python statistics routines!"
    
-   > "Mathematical elegance seems nice and all, but my 3D-printed toaster only has Python bindings."
+   > "Mathematical elegance seems nice and all, but my 3D-printed e-toaster only has Python bindings."
    
    > "The rest of my research group uses Python, and we need to be able to interface with each other's code cleanly!"
 
-Tidy aims to address these sorts of concerns by embedding a typed functional programming language cleanly into Python, as a library. You can install `tidy` by running `pip install tidy` today.
+Tidy aims to address these concerns by embedding a typed functional programming language cleanly into Python, as a library. You can install `tidy` by running `pip install tidy` today.
 
 Hello, World!
 -------------
@@ -67,5 +67,5 @@ It would really help if there was funding flowing into the project. Here are som
 
 License
 -------
-`tidy` is released under the permissive MIT License, requiring only attribution in derivative works. See LICENSE for full terms.
+`tidy` is released under the permissive MIT License, requiring only attribution in derivative works.
 
