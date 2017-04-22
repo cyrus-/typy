@@ -4,7 +4,7 @@ NOTE: Tidy is still under development and this repository is not yet intended fo
 
 Tidy
 ----
-Typed functional programming is on the rise, but for many Python programmers it isn't practical to switch outright to a typed functional language like OCaml or Haskell. Consider the following totally-not-made-up quotes:
+Typed functional programming is on the rise, but for many Python programmers it just isn't practical to switch outright to a typed functional language like OCaml or Haskell. Consider the following totally-not-made-up quotes:
 
    > "Ha, and rewrite all of these Python statistics routines!"
    
