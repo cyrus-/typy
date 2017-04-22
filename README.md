@@ -4,13 +4,13 @@ NOTE: Tidy is still under development and this repository is not yet intended fo
 
 Tidy
 ----
-Typed functional programming is on the rise, but for many Python programmers it is impractical to switch outright to a typed functional language like OCaml or Haskell. Consider the following totally-not-made-up quotes:
+Typed functional programming is on the rise, but for a most Python programmers it isn't practical to switch outright to a typed functional language like OCaml or Haskell. Consider the following totally-not-made-up quotes:
 
-   > "You'll never get me to give up my obscure Python statistics packages!"
+   > "You'll never get me to give up all of these established Python statistics packages!"
    
    > "Mathematical elegance seems nice and all, but my 3D-printed toaster only has Python bindings."
    
-   > "The rest of my research group uses Python, and we need to be able to call into each other's code!"
+   > "The rest of my research group uses Python, and we need to be able to interface with each other's code cleanly!"
 
 Tidy aims to address these sorts of concerns by embedding a typed functional programming language cleanly into Python, as a library. You can install `tidy` by running `pip install tidy` today.
 
@@ -38,7 +38,7 @@ The module body is parsed by Python, then typechecked and translated to Python b
 
 Language Features
 -----------------
-Simple functions like `hello` are, of course, just the beginning. Tidy has all the typed functional essentials... 
+Simple functions like `hello` are, of course, just the beginning. Tidy features all the typed functional essentials... 
 * algebraic datatypes (tuples, labeled tuples and labeled sums)
 * pattern matching
 * parametric polymorphism
@@ -46,24 +46,24 @@ Simple functions like `hello` are, of course, just the beginning. Tidy has all t
 
 ...plus, fast and clean two-way interoperability with Python. 
 
-If you're already familiar with a typed functional language, you might be interested in a side-by-side comparison with Standard ML and OCaml. The manual gives the full details. If you're not familiar with a typed functional language, start with "what is typed functional programming, and why should I care?"
+If you're already familiar with a typed functional language, you might be interested in a side-by-side comparison with  OCaml. The manual gives the full details. If you're not familiar with a typed functional language, start with "what is typed functional programming, and why should I care?"
 
 Help make this happen.
 -----------------------
 I think Tidy could bring typed functional programming to a massive new audience. You can help by joining the movement and by contributing funding:
 
-### Joining the movement
+### Join the movement!
 * star this repository, share
 * join the conversation on Discourse
 * write a Tidy library (ideas and progress)
 * give a talk about Tidy to your local Python users group, your academic department, or to a conference (example slides)
 * join the Tidy team -- there are lots of really interesting projects for anyone interested in designing and implementing programming languages and tools. 
 
-### Funding
+### Funding!
 It would really help if there was funding flowing into the project. Here are some ways you can help with that:
-* contribute individually to the patreon campaign 
-* become an organizational sponsor of tydy, and enjoy prominent placement on the website and README
+* contribute individually to my Patreon campaign 
 * hire me to give a training seminar, provide support or consult
+* become an organizational sponsor of Tidy, and enjoy prominent placement on the website and README
 
 License
 -------
