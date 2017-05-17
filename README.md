@@ -1,4 +1,4 @@
-NOTE: Tidy is still under development and this repository is not yet intended for public consumption in any way.
+NOTE: Tidy is still under development and this repository is not yet ready for public consumption. Most development is going on in the underlying typy repository for now. 
 
 ---
 
