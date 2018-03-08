@@ -46,16 +46,6 @@ Simple functions like `hello` are, of course, just the beginning. Tidy features 
 
 If you're already familiar with a typed functional language, you might be interested in a side-by-side comparison with  OCaml (TODO). The manual (TODO) gives the full details. If you're not familiar with a typed functional language, start with "what is typed functional programming, and why should I care?" (TODO)
 
-Help make this happen.
------------------------
-I think Tidy could bring typed functional programming to a massive new audience. You can help:
-
-* star this repository, share
-* join the conversation on Discourse (TODO)
-* write a Tidy library (TODO: ideas and progress)
-* give a talk about Tidy to your local Python users group, your academic department, or to a conference (example slides)
-* join the Tidy team -- there are lots of really interesting projects for anyone interested in designing and implementing programming languages and tools. 
-
 License
 -------
 `tidy` is released under the permissive MIT License, requiring only attribution in derivative works.
